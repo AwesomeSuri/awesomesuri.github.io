@@ -42,10 +42,16 @@
           id="themeToggle"
           class="theme-toggle"
           type="button"
-          aria-label="Toggle color theme"
+          role="switch"
+          aria-label="Use light theme"
+          aria-checked="false"
           aria-live="polite"
         >
-          <i id="themeIcon" class="fa-solid fa-moon" aria-hidden="true"></i>
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb">
+              <i id="themeIcon" class="fa-solid fa-moon" aria-hidden="true"></i>
+            </span>
+          </span>
           <span class="sr-only">Toggle color theme</span>
         </button>
       </header>
@@ -253,31 +259,52 @@
       const button = document.getElementById("themeToggle");
       const themeIcon = document.getElementById("themeIcon");
       const storedTheme = localStorage.getItem("theme");
+      const systemPrefersLight = window.matchMedia("(prefers-color-scheme: light)");
 
       // Keep the icon and accessibility label in sync with the active theme.
       const syncThemeIcon = (theme) => {
         const isLight = theme === "light";
         themeIcon.classList.toggle("fa-sun", isLight);
         themeIcon.classList.toggle("fa-moon", !isLight);
+        button.setAttribute("aria-checked", String(isLight));
         button.setAttribute(
           "aria-label",
-          isLight ? "Switch to dark theme" : "Switch to light theme"
+          isLight ? "Use dark theme" : "Use light theme"
         );
       };
 
-      // Restore previously selected theme on page load.
-      if (storedTheme) {
-        root.setAttribute("data-theme", storedTheme);
-      }
-      syncThemeIcon(root.getAttribute("data-theme"));
+      // Resolve active theme: saved preference first, otherwise system preference.
+      const getPreferredTheme = () => {
+        if (storedTheme) {
+          return storedTheme;
+        }
+        return systemPrefersLight.matches ? "light" : "dark";
+      };
+
+      const applyTheme = (theme) => {
+        if (theme === "light") {
+          root.setAttribute("data-theme", "light");
+        } else {
+          root.removeAttribute("data-theme");
+        }
+        syncThemeIcon(theme);
+      };
+
+      applyTheme(getPreferredTheme());
 
       // Toggle between light/dark theme and persist the choice.
       button.addEventListener("click", () => {
-        const current = root.getAttribute("data-theme");
+        const current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
         const next = current === "light" ? "dark" : "light";
-        root.setAttribute("data-theme", next);
+        applyTheme(next);
         localStorage.setItem("theme", next);
-        syncThemeIcon(next);
+      });
+
+      // If the user never picked a theme, keep following OS changes live.
+      systemPrefersLight.addEventListener("change", () => {
+        if (!localStorage.getItem("theme")) {
+          applyTheme(systemPrefersLight.matches ? "light" : "dark");
+        }
       });
 
       // Navigation + scrollspy references.
