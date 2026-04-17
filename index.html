@@ -1,57 +1,366 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akbar Suriaganda | Software Engineer</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      line-height: 1.6;
-    }
-    h1, h2 {
-      margin-bottom: 0.4em;
-    }
-    .project {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 16px;
-      margin: 16px 0;
-    }
-    a {
-      text-decoration: none;
-    }
-  </style>
-</head>
-<body>
-  <h1>Akbar Suriaganda (WIP)</h1>
-  <p>Software engineer focused on games, tools, and interactive projects.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Akbar Suriaganda | Software Engineer</title>
+    <meta
+      name="description"
+      content="Portfolio website of Akbar Suriaganda, software engineer focused on games, tools, and interactive products."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container" id="home" >
+      <header class="topbar" data-aos="fade-down">
+        <a class="brand" href="#home">Akbar Suriaganda</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button
+          id="themeToggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="Toggle color theme"
+          aria-live="polite"
+        >
+          <i id="themeIcon" class="fa-solid fa-moon" aria-hidden="true"></i>
+          <span class="sr-only">Toggle color theme</span>
+        </button>
+      </header>
 
-  <h2>About Me</h2>
-  <p>
-    I build games and software projects with a focus on performance,
-    usability, and clean architecture.
-  </p>
+      <main>
+        <div class="section-wrap" style="border: 1px solid green;">
+          <section class="hero" data-aos="fade-up">
+            <span class="badge">Software Engineer - Games - Tools</span>
+            <h1>(WIP) Building fast, interactive software with clean architecture.</h1>
+            <p>
+              I design and ship projects focused on performance, good UX, and
+              maintainable systems. This page is my home base for projects,
+              experiments, and professional work.
+            </p>
+            <div class="cta">
+              <a class="btn btn-primary" href="https://github.com/yourusername"
+                >View GitHub</a
+              >
+              <a class="btn btn-secondary" href="#projects">See Projects</a>
+            </div>
+          </section>
+        </div>
 
-  <h2>Projects</h2>
+        <div class="section-wrap" id="about">
+          <section data-aos="fade-up">
+            <h2>About Me</h2>
+            <p class="section-lead">
+              I am Akbar Suriaganda, a software engineer focused on building game
+              systems, developer tools, and web experiences that feel fast and
+              intuitive.
+            </p>
+            <div class="about-grid">
+              <article class="about-card">
+                <h3>How I work</h3>
+                <p>
+                  I combine product thinking with engineering discipline:
+                  performance-first implementation, clean architecture, and
+                  user-centered iteration.
+                </p>
+              </article>
+              <article class="about-card">
+                <h3>What I enjoy building</h3>
+                <p>
+                  Interactive systems, gameplay features, internal tools, and
+                  polished interfaces that solve practical problems and scale well
+                  over time.
+                </p>
+              </article>
+            </div>
+          </section>
+        </div>
 
-  <div class="project">
-    <h3>Game Project 1</h3>
-    <p>Short description of the game.</p>
-    <p>
-      <a href="https://github.com/yourusername/project1">GitHub</a>
-    </p>
-  </div>
+        <div class="section-wrap" id="projects">
+          <section data-aos="fade-up">
+            <h2>Featured Projects</h2>
+            <p class="section-lead">
+              Replace these placeholders with your real projects, links, and
+              screenshots.
+            </p>
+            <div class="swiper projects-swiper">
+              <div class="swiper-wrapper">
+                <article class="swiper-slide card">
+                  <img
+                    class="project-thumb"
+                    src="https://placehold.co/800x450/1f2937/ffffff?text=Game+Project"
+                    alt="Game project thumbnail"
+                    loading="lazy"
+                  />
+                  <h3>Game Project</h3>
+                  <p>
+                    A fast-paced game prototype with responsive controls and a
+                    data driven gameplay system.
+                  </p>
+                  <a class="project-link" href="https://github.com/yourusername/project1"
+                    >GitHub -></a
+                  >
+                </article>
+                <article class="swiper-slide card">
+                  <img
+                    class="project-thumb"
+                    src="https://placehold.co/800x450/0f766e/ffffff?text=Developer+Tool"
+                    alt="Developer tool thumbnail"
+                    loading="lazy"
+                  />
+                  <h3>Developer Tool</h3>
+                  <p>
+                    A productivity tool built to simplify workflows with a focus
+                    on speed and clarity.
+                  </p>
+                  <a class="project-link" href="https://github.com/yourusername/project2"
+                    >GitHub -></a
+                  >
+                </article>
+                <article class="swiper-slide card">
+                  <img
+                    class="project-thumb"
+                    src="https://placehold.co/800x450/312e81/ffffff?text=Web+Experience"
+                    alt="Interactive web experience thumbnail"
+                    loading="lazy"
+                  />
+                  <h3>Interactive Web Experience</h3>
+                  <p>
+                    A browser-based interactive demo focused on smooth animation
+                    and rendering performance.
+                  </p>
+                  <a class="project-link" href="https://github.com/yourusername/project3"
+                    >GitHub -></a
+                  >
+                </article>
+              </div>
+              <div class="projects-swiper-controls">
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+              </div>
+            </div>
+          </section>
+        </div>
 
-  <div class="project">
-    <h3>Project 2</h3>
-    <p>Short description of the project.</p>
-    <p>
-      <a href="https://github.com/yourusername/project2">GitHub</a>
-    </p>
-  </div>
-</body>
+        <div class="section-wrap" id="skills">
+          <section data-aos="fade-up">
+            <h2>Core Skills</h2>
+            <p class="section-lead">
+              Highlight the technologies you want recruiters and collaborators to
+              notice first.
+            </p>
+            <div class="chip-list">
+              <span class="chip">C# / Unity</span>
+              <span class="chip">JavaScript / TypeScript</span>
+              <span class="chip">Web Performance</span>
+              <span class="chip">Game Systems</span>
+              <span class="chip">Tools Engineering</span>
+              <span class="chip">CI/CD</span>
+            </div>
+          </section>
+        </div>
+
+        <div class="section-wrap" id="contact">
+          <section data-aos="fade-up">
+            <h2>Contact</h2>
+            <div class="contact">
+              <p>
+                Open to software engineering opportunities and interesting
+                collaborations.
+              </p>
+              <p>
+                Email:
+                <a href="mailto:akbar.suriaganda@gmail.com"
+                  >akbar.suriaganda@gmail.com</a
+                >
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer>
+        <span>© <span id="year"></span> Akbar Suriaganda</span>
+        <a href="/imprint.html">Impressum</a>
+      </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      // Disable browser auto scroll restoration to prevent early hash jumps on reload.
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+
+      // Initialize scroll-in animations for section content.
+      AOS.init({
+        duration: 700,
+        once: true
+      });
+
+      // Initialize the projects carousel with autoplay and responsive breakpoints.
+      new Swiper(".projects-swiper", {
+        spaceBetween: 16,
+        slidesPerView: 1,
+        loop: true,
+        grabCursor: true,
+        autoplay: {
+          delay: 3200,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        breakpoints: {
+          760: {
+            slidesPerView: 2
+          }
+        }
+      });
+
+      // Theme toggle state and references.
+      const root = document.documentElement;
+      const button = document.getElementById("themeToggle");
+      const themeIcon = document.getElementById("themeIcon");
+      const storedTheme = localStorage.getItem("theme");
+
+      // Keep the icon and accessibility label in sync with the active theme.
+      const syncThemeIcon = (theme) => {
+        const isLight = theme === "light";
+        themeIcon.classList.toggle("fa-sun", isLight);
+        themeIcon.classList.toggle("fa-moon", !isLight);
+        button.setAttribute(
+          "aria-label",
+          isLight ? "Switch to dark theme" : "Switch to light theme"
+        );
+      };
+
+      // Restore previously selected theme on page load.
+      if (storedTheme) {
+        root.setAttribute("data-theme", storedTheme);
+      }
+      syncThemeIcon(root.getAttribute("data-theme"));
+
+      // Toggle between light/dark theme and persist the choice.
+      button.addEventListener("click", () => {
+        const current = root.getAttribute("data-theme");
+        const next = current === "light" ? "dark" : "light";
+        root.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+        syncThemeIcon(next);
+      });
+
+      // Navigation + scrollspy references.
+      const topbar = document.querySelector(".topbar");
+      const nav = document.querySelector(".nav");
+      const navLinks = Array.from(nav.querySelectorAll('a[href^="#"]'));
+      // Map nav links to existing section wrappers for active-state tracking.
+      const sectionLinks = navLinks
+        .map((link) => {
+          const section = document.querySelector(link.getAttribute("href"));
+          return section ? { link, section } : null;
+        })
+        .filter(Boolean);
+
+      // Apply active styles and aria-current to exactly one nav link.
+      const setActiveNavLink = (activeLink) => {
+        navLinks.forEach((link) => {
+          const isActive = link === activeLink;
+          link.classList.toggle("active", isActive);
+          if (isActive) {
+            link.setAttribute("aria-current", "page");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      };
+
+      // Move the animated underline under the currently active nav link.
+      const moveNavIndicator = (activeLink) => {
+        if (!activeLink) {
+          nav.style.setProperty("--nav-indicator-opacity", "0");
+          return;
+        }
+
+        const navRect = nav.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        nav.style.setProperty("--nav-indicator-left", `${linkRect.left - navRect.left}px`);
+        nav.style.setProperty("--nav-indicator-width", `${linkRect.width}px`);
+        nav.style.setProperty("--nav-indicator-opacity", "1");
+      };
+
+      // Detect the section currently in view and sync nav highlight/underline.
+      const refreshActiveSection = () => {
+        const activationLine = topbar.offsetHeight + 56;
+        let active = sectionLinks[0]?.link ?? null;
+
+        sectionLinks.forEach(({ link, section }) => {
+          const sectionTop = section.getBoundingClientRect().top;
+          if (sectionTop <= activationLine) {
+            active = link;
+          }
+        });
+
+        setActiveNavLink(active);
+        moveNavIndicator(active);
+      };
+
+      // Keep nav state in sync on user scroll and viewport size changes.
+      window.addEventListener("scroll", refreshActiveSection, { passive: true });
+      window.addEventListener("resize", refreshActiveSection);
+      refreshActiveSection();
+
+      // After full load, apply hash scrolling once layout is stable.
+      window.addEventListener("load", () => {
+        if (!window.location.hash) {
+          window.scrollTo({ top: 0, behavior: "auto" });
+          refreshActiveSection();
+          return;
+        }
+
+        const target = document.querySelector(window.location.hash);
+        if (!target) {
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          target.scrollIntoView({ block: "start", behavior: "auto" });
+          refreshActiveSection();
+        });
+      });
+
+      // Render current year in the footer.
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
 </html>
