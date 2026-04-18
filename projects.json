@@ -1,0 +1,40 @@
+{
+    "projects": [
+        {
+            "name": "Mizu - Your personal CKD companion",
+            "company": "Carealytix Digital Health GmbH",
+            "description": "<p>A mobile app that helps you manage your <strong>CKD (Chronic Kidney Disease)</strong>. It provides tools to track your health, medications, and nutrition, among other features.</p><p>Together with a great team, I worked on both frontend and backend development, took ownership of a feature, and maintained the marketing website.</p>",
+            "image": "mizu.png",
+            "url": "https://www.mizu-app.com",
+            "tags": ["iOS", "Android", "Node.js", "Typescript", "React Native", "React", "NestJS"],
+            "roles": ["Fullstack Developer", "Web Developer"]
+        },
+        {
+            "name": "How is the Water",
+            "company": "Cyan Planet UG",
+            "description": "<p>A prototype for an experience about dolphins in <strong>VR (Virtual Reality)</strong>.</p><p>I was one of two lead developers and served as the technical artist, creating and integrating 3D and 2D assets, enhancing the visuals with VFX, and implementing the AI for the marine wildlife.</p>",
+            "image": "hitw.png",
+            "url": "https://www.youtube.com/watch?v=6v5Q7tPzHsM",
+            "tags": ["Unity", "Blender", "C#", "HLSL", "VR", "VFX", "AI"],
+            "roles": ["Lead Developer", "Technical Artist"]
+        },
+        {
+            "name": "Rimba - Guardian of the Jungle",
+            "company": "Manubyk",
+            "description": "<p>A prototype for a <strong>point-and-click/platformer game</strong> about an orangutan reserve and its stories.</p><p>As the technical artist, I integrated 2D assets and enhanced the visuals with VFX.</p>",
+            "image": "rimba.png",
+            "url": "https://www.instagram.com/manubykofficial/",
+            "tags": ["Unity", "Photoshop", "C#", "VFX"],
+            "roles": ["Technical Artist", "Game Engineer"]
+        },
+        {
+            "name": "Eleman",
+            "company": "Rhinoceros Games Production",
+            "description": "<p>A student project at the Technical University of Munich for a <strong>2.5D platformer game</strong> about an elemental spirit who travels the world to regain its power.</p><p>Together with one other student, I was responsible for 3D asset creation, level design, storytelling, and visuals.</p>",
+            "image": "eleman.png",
+            "url": "https://www.youtube.com/watch?v=gcygqjLu9gw",
+            "tags": ["Unity", "Blender", "C#", "VFX"],
+            "roles": ["Technical Artist", "Level Designer", "Storyteller"]
+        }
+    ]
+}
