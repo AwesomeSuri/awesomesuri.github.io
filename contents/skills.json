@@ -1,0 +1,39 @@
+{
+    "skills": [
+        {
+            "name": "Frontend",
+            "description": "I implement designs with precision, strong accessibility standards, and a consistent focus on performance.",
+            "tags": ["React/ReactNative", "JS/TS", "HTML/CSS", "Webflow", "Wordpress"]
+        },
+        {
+            "name": "Backend",
+            "description": "I build backend systems with a focus on stability, robust error handling, and security.",
+            "tags": ["NestJS", "JWT", "JS"]
+        },
+        {
+            "name": "Testing",
+            "description": "I test across multiple systems, screen sizes, and languages, actively hunt edge cases, and add automated tests whenever possible, including Test-Driven Development.",
+            "tags": ["Jest", "Playwright", "TDD"]
+        },
+        {
+            "name": "Ownership",
+            "description": "I do not just implement features; I own them end to end by maintaining them, monitoring bug reports, and fixing issues quickly.",
+            "tags": ["Developer Console", "Sentry"]
+        },
+        {
+            "name": "Tooling",
+            "description": "I constantly look for ways to work smarter: if a step can be automated, I automate it, and when good tools already exist, I use them instead of reinventing the wheel.",
+            "tags": ["JS", "C#"]
+        },
+        {
+            "name": "Polishing",
+            "description": "When time allows, I improve visual quality with thoughtful animations, effects, and richer interaction feedback to delight users.",
+            "tags": ["CSS", "VFX", "HLSL", "Shader Graph"]
+        },
+        {
+            "name": "Asset Creation",
+            "description": "I create 2D illustrations and 3D models that are optimized and suited for the target application, including game-ready workflows.",
+            "tags": ["Photoshop", "Blender", "Gimp", "Inkscape"]
+        }
+    ]
+}
