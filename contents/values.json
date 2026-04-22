@@ -1,0 +1,16 @@
+{
+    "values": [
+        {
+            "name": "User-Centered",
+            "description": "<strong>User experience</strong> is at the core of everything I build. I iterate continuously based on user feedback and data."
+        },
+        {
+            "name": "Efficiency",
+            "description": "I believe in the <strong>80/20 rule</strong>: deliver most of the value early to gather feedback faster, fail earlier, and create more time for polishing."
+        },
+        {
+            "name": "Teamwork",
+            "description": "I do not need to be the best at everything. I rely on my team when needed and support others the same way. <strong>Teaching each other is one of the best ways to grow.</strong>"
+        }
+    ]
+}

@@ -102,40 +102,38 @@
         <div class="section-wrap" id="what-i-do">
           <section data-aos="fade-up">
             <h2>What I do</h2>
-            <p class="section-lead">
-              I build across gameplay, tooling, and web experiences with a focus
-              on performance, clarity, and long-term maintainability.
-            </p>
             <div class="skills-accordion" id="skillsAccordion"></div>
           </section>
         </div>
 
         <div class="section-wrap" id="about">
           <section data-aos="fade-up">
-            <h2>About Me</h2>
-            <p class="section-lead">
-              I am Akbar Suriaganda, a software engineer focused on building game
-              systems, developer tools, and web experiences that feel fast and
-              intuitive.
-            </p>
-            <div class="about-grid">
-              <article class="about-card">
-                <h3>How I work</h3>
-                <p>
-                  I combine product thinking with engineering discipline:
-                  performance-first implementation, clean architecture, and
-                  user-centered iteration.
-                </p>
-              </article>
-              <article class="about-card">
-                <h3>What I enjoy building</h3>
-                <p>
-                  Interactive systems, gameplay features, internal tools, and
-                  polished interfaces that solve practical problems and scale well
-                  over time.
-                </p>
-              </article>
-            </div>
+            <article class="about-feature">
+              <div class="about-feature-inner">
+                <div class="about-feature-copy">
+                  <h3>Hi, I'm Akbar!</h3>
+                  <p>
+                    I have finished my master's degree in <strong>IT: Game Engineering</strong>
+                    at the <strong>Technical University of Munich</strong> and I build software
+                    and interactive experiences I truly care about.
+                  </p>
+                  <p>
+                    <strong>I love games</strong>, and especially how they are made. I also grew
+                    up fascinated by CGI films; Transformers sparked my passion
+                    for 3D modeling. Since then, it has been my dream to <strong>create
+                    products that amaze people</strong> the same way those works amazed
+                    me.
+                  </p>
+                  <h4>Things I value:</h4>
+                  <div class="about-grid" id="valuesGrid"></div>
+                </div>
+                <img
+                  class="about-feature-image"
+                  src="/assets/akbar-cx.webp"
+                  alt="Portrait of Akbar Suriaganda"
+                />
+              </div>
+            </article>
           </section>
         </div>
 
@@ -372,6 +370,44 @@
 
       const skillsReady = initSkillsSection();
 
+      const valuesGrid = document.getElementById("valuesGrid");
+
+      const renderValueCard = (value) => `
+        <article class="about-card">
+          <h4>${value.name}</h4>
+          <p>${value.description}</p>
+        </article>
+      `;
+
+      const renderFallbackValues = () => {
+        valuesGrid.innerHTML = `
+          <article class="about-card">
+            <h3>Values</h3>
+            <p>Values could not be loaded right now.</p>
+          </article>
+        `;
+      };
+
+      const initValuesSection = async () => {
+        if (!valuesGrid) return;
+        try {
+          const response = await fetch("/contents/values.json", { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error("Failed to fetch values.json");
+          }
+          const data = await response.json();
+          const values = Array.isArray(data.values) ? data.values : [];
+          if (!values.length) {
+            throw new Error("No values found in JSON");
+          }
+          valuesGrid.innerHTML = values.map(renderValueCard).join("");
+        } catch (error) {
+          renderFallbackValues();
+        }
+      };
+
+      const valuesReady = initValuesSection();
+
       // Navigation + scrollspy references.
       const topbar = document.querySelector(".topbar");
       const nav = document.querySelector(".nav");
@@ -435,6 +471,7 @@
       // After full load, apply hash scrolling once layout is stable.
       window.addEventListener("load", async () => {
         await skillsReady;
+        await valuesReady;
 
         if (!window.location.hash) {
           window.scrollTo({ top: 0, behavior: "auto" });
