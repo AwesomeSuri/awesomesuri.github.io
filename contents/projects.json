@@ -7,8 +7,18 @@
             "image": "mizu.webp",
             "image-small": "mizu-small.webp",
             "url": "https://www.mizu-app.com",
-            "tags": ["iOS", "Android", "Node.js", "Typescript", "React Native", "React", "NestJS"],
-            "roles": ["Fullstack Developer", "Web Developer"]
+            "tags": ["iOS", "Android", "Node.js", "Typescript", "React Native", "NestJS", "Jest"],
+            "roles": ["Fullstack Developer", "Feature Owner", "Web Developer"]
+        },
+        {
+            "name": "kidney+",
+            "company": "Carealytix Digital Health GmbH",
+            "description": "<p>A web application which enables <strong>telecoaching</strong> by connecting coaches to Mizu users. It provides appointment scheduling, taking notes, and chat or video calls.</p><p>Together with a great team, I worked on both frontend and backend development, took ownership of a feature, and maintained the marketing website.</p>",
+            "image": "kidneyplus.webp",
+            "image-small": "kidneyplus-small.webp",
+            "url": "https://www.kidney-plus.com",  
+            "tags": ["Web", "Node.js", "Typescript", "React", "NestJS", "JWT", "Sentry", "Playwright"],
+            "roles": ["Fullstack Developer", "Feature Owner", "Web Developer"]
         },
         {
             "name": "How is the Water",

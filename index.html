@@ -365,6 +365,7 @@
         });
 
         let areProjectDetailsExpanded = false;
+        let isProjectsCarouselVisible = false;
 
         const setAllProjectPanelsExpanded = (expanded) => {
           areProjectDetailsExpanded = expanded;
@@ -375,12 +376,28 @@
         };
 
         const updateProjectsAutoplay = () => {
-          if (areProjectDetailsExpanded) {
+          if (areProjectDetailsExpanded || !isProjectsCarouselVisible) {
             projectsSwiper.autoplay?.stop();
           } else {
             projectsSwiper.autoplay?.start();
           }
         };
+
+        if (projectsCarouselEl) {
+          if ("IntersectionObserver" in window) {
+            const autoplayObserver = new IntersectionObserver(
+              ([entry]) => {
+                isProjectsCarouselVisible = Boolean(entry?.isIntersecting);
+                updateProjectsAutoplay();
+              },
+              { threshold: 0.25 }
+            );
+            autoplayObserver.observe(projectsCarouselEl);
+          } else {
+            // Fallback for older browsers: keep previous autoplay behavior.
+            isProjectsCarouselVisible = true;
+          }
+        }
 
         projectsCarouselEl?.addEventListener("click", (event) => {
           const inner = event.target.closest(".card-project__inner");
