@@ -167,7 +167,7 @@
         <div class="section-wrap" id="contact">
           <section data-aos="fade-up">
             <h2>Are you interested in working together?</h2>
-            <div class="contact">
+            <div>
               <p>
                 I'm open to software engineering opportunities and interesting collaborations.
               </p>
@@ -209,9 +209,9 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-      // Disable browser auto scroll restoration to prevent early hash jumps on reload.
+      // Keep default browser behavior on reload/back-forward.
       if ("scrollRestoration" in history) {
-        history.scrollRestoration = "manual";
+        history.scrollRestoration = "auto";
       }
 
       // Initialize scroll-in animations for section content.
@@ -669,28 +669,6 @@
         refreshActiveSection();
       });
       refreshActiveSection();
-
-      // After full load, apply hash scrolling once layout is stable.
-      window.addEventListener("load", async () => {
-        await skillsReady;
-        await valuesReady;
-
-        if (!window.location.hash) {
-          window.scrollTo({ top: 0, behavior: "auto" });
-          refreshActiveSection();
-          return;
-        }
-
-        const target = document.querySelector(window.location.hash);
-        if (!target) {
-          return;
-        }
-
-        requestAnimationFrame(() => {
-          target.scrollIntoView({ block: "start", behavior: "auto" });
-          refreshActiveSection();
-        });
-      });
 
       // Render current year in the footer.
       const currentYear = new Date().getFullYear();

@@ -14,6 +14,7 @@
   --topbar-clearance: 80px;
   --container-padding: 24px;
   --min-width: 320px;
+  --viewport-width: max(100vw, var(--min-width));
 }
   
 [data-theme="light"] {
@@ -79,8 +80,8 @@ a {
   z-index: 20;
   padding-top: 16px;
   padding-bottom: 32px;
-  padding-left: max(var(--container-padding), calc((100vw - var(--content-max)) / 2 + var(--container-padding)));
-  padding-right: max(var(--container-padding), calc((100vw - var(--content-max)) / 2 + var(--container-padding)));
+  padding-left: max(var(--container-padding), calc((var(--viewport-width) - var(--content-max)) / 2 + var(--container-padding)));
+  padding-right: max(var(--container-padding), calc((var(--viewport-width) - var(--content-max)) / 2 + var(--container-padding)));
   background: linear-gradient(
     to bottom,
     rgba(10, 12, 20, 1) 0%,
@@ -362,9 +363,9 @@ h2 {
     rgba(139, 92, 246, 0.12) 0%,
     rgba(6, 182, 212, 0.1) 100%
   );
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: var(--viewport-width);
+  margin-left: calc(50% - (var(--viewport-width) / 2));
+  margin-right: calc(50% - (var(--viewport-width) / 2));
   margin-bottom: 16px;
   overflow: hidden;
 }
@@ -435,9 +436,9 @@ h2 {
 
 .projects-band {
   box-sizing: border-box;
-  width: 100vw;
-  margin: 0 0 0 calc(50% - 50vw);
-  padding: 22px max(var(--container-padding), calc((100vw - var(--content-max)) / 2 + var(--container-padding))) 26px;
+  width: var(--viewport-width);
+  margin: 0 0 0 calc(50% - (var(--viewport-width) / 2));
+  padding: 22px max(var(--container-padding), calc((var(--viewport-width) - var(--content-max)) / 2 + var(--container-padding))) 26px;
   overflow: hidden;
   background: linear-gradient(
     120deg,
@@ -850,11 +851,11 @@ footer a:hover {
 
 .footer-background {
   position: absolute;
-  width: 100vw;
+  width: var(--viewport-width);
   height: 100%;
   top: 0;
   left: 50%;
-  transform: translateX(-50vw);
+  transform: translateX(calc(var(--viewport-width) / -2));
   background: var(--line);
   transition: background 300ms ease;
   pointer-events: none;
@@ -932,7 +933,7 @@ footer a:hover {
     right: 0;
     top: 0;
     bottom: 0;
-    width: 100vw;
+    width: var(--viewport-width);
     height: 100vh;
     flex-direction: column;
     align-items: stretch;
@@ -1013,7 +1014,7 @@ footer a:hover {
   }
 
   .theme-toggle[aria-checked="true"] .theme-toggle-thumb {
-    transform: translateX(calc(100vw - 32px - 2 * var(--container-padding)));
+    transform: translateX(24px);
   }
 
   body.is-nav-open {
@@ -1022,7 +1023,7 @@ footer a:hover {
 
   .projects-swiper {
     margin-left: calc(0px - var(--container-padding));
-    width: 100vw;
+    width: var(--viewport-width);
   }
 
   .projects-swiper .card.card--project {
