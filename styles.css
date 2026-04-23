@@ -11,7 +11,7 @@
   --brand-2: #06b6d4;
   --radius: 18px;
   --content-max: 1280px;
-  --topbar-clearance: 116px;
+  --topbar-clearance: 80px;
   --container-padding: 24px;
   --min-width: 320px;
 }
@@ -78,13 +78,13 @@ a {
   min-width: var(--min-width);
   z-index: 20;
   padding-top: 16px;
-  padding-bottom: 56px;
+  padding-bottom: 32px;
   padding-left: max(var(--container-padding), calc((100vw - var(--content-max)) / 2 + var(--container-padding)));
   padding-right: max(var(--container-padding), calc((100vw - var(--content-max)) / 2 + var(--container-padding)));
   background: linear-gradient(
     to bottom,
     rgba(10, 12, 20, 1) 0%,
-    rgba(10, 12, 20, 1) 60%,
+    rgba(10, 12, 20, 1) 70%,
     rgba(10, 12, 20, 0) 100%
   );
   display: flex;
@@ -97,7 +97,7 @@ a {
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 1) 60%,
+    rgba(255, 255, 255, 1) 70%,
     rgba(255, 255, 255, 0) 100%
   );
 }
@@ -339,7 +339,7 @@ h1 {
 
 .section-wrap {
   padding-top: var(--topbar-clearance);
-  min-height: 100svh;
+  min-height: 90svh;
 }
 
 section {
@@ -433,12 +433,31 @@ h2 {
   color: var(--muted);
 }
 
+.projects-band {
+  box-sizing: border-box;
+  width: 100vw;
+  margin: 0 0 0 calc(50% - 50vw);
+  padding: 22px max(var(--container-padding), calc((100vw - var(--content-max)) / 2 + var(--container-padding))) 26px;
+  overflow: hidden;
+  background: linear-gradient(
+    120deg,
+    rgba(139, 92, 246, 0.12) 0%,
+    rgba(6, 182, 212, 0.1) 100%
+  );
+  transition: border-color 300ms ease;
+}
+
 .projects-swiper {
-  padding: 2px 2px 14px;
+  padding: 0 0 4px;
 }
 
 .projects-swiper .swiper-slide {
   height: auto;
+}
+
+/* After init: inactive slides are non-interactive (important for fade stacking). */
+.projects-swiper.swiper-initialized .swiper-slide:not(.swiper-slide-active) {
+  pointer-events: none;
 }
 
 .projects-swiper-controls {
@@ -519,7 +538,7 @@ h2 {
 }
 
 .project-company {
-  margin-top: -10px !important;
+  margin-top: 0 !important;
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--text) !important;
@@ -558,18 +577,150 @@ h2 {
     color 300ms ease;
 }
 
-.project-thumb {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid var(--line);
+.projects-swiper .card.card--project {
+  position: relative;
+  overflow: hidden;
+  height: 70vh;
+  padding: 0;
+  gap: 0;
+  background-color: var(--bg-soft);
+  background-image: var(--project-thumb-large, var(--project-thumb-small));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border: none;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .projects-swiper .card.card--project {
+    background-image: var(--project-thumb-small, var(--project-thumb-large));
+  }
+}
+
+
+.projects-swiper .card--project .card-project__inner {
+  padding: 14px 16px 16px;
+  background: rgba(10, 12, 20, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  overflow-y: scroll;
+}
+
+[data-theme="light"] .projects-swiper .card--project .card-project__inner {
+  background: rgba(255, 255, 255, 0.6);
+  max-height: 100%;
+}
+
+.projects-swiper .card--project .card-project__head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.projects-swiper .card--project .card-project__head h3 {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.projects-swiper .card--project .card-project__hint {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.projects-swiper .card--project .card-project__hint-bob {
+  display: inline-flex;
+  animation: card-project-hint-bob 1.75s ease-in-out infinite;
+}
+
+.projects-swiper .card--project .card-project__inner.is-pinned .card-project__hint-bob {
+  animation: none;
+}
+
+.projects-swiper .card--project .card-project__hint-icon {
+  display: block;
+  color: var(--text);
+  opacity: 0.88;
+  transition:
+    transform 0.42s cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 0.28s ease;
+}
+
+.projects-swiper .card--project .card-project__inner.is-pinned .card-project__hint-icon {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+@keyframes card-project-hint-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  45% {
+    transform: translateY(5px);
+  }
+}
+
+.projects-swiper .card--project .card-project__drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.projects-swiper .card--project .card-project__inner.is-pinned .card-project__drawer {
+  grid-template-rows: 1fr;
+}
+
+.projects-swiper .card--project .card-project__drawer-inner {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition:
+    opacity 0.34s ease,
+    transform 0.42s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.projects-swiper .card--project .card-project__inner.is-pinned .card-project__drawer-inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.projects-swiper .card--project .card-project__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.projects-swiper .card--project .project-chip {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: var(--text);
+}
+
+[data-theme="light"] .projects-swiper .card--project .project-chip {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: var(--line);
+  color: var(--text);
 }
 
 .project-link {
   margin-top: auto;
   color: var(--text);
   font-weight: 600;
+  cursor: pointer;
 }
 
 .skills-accordion {
@@ -628,16 +779,6 @@ h2 {
     background 300ms ease,
     border-color 300ms ease,
     color 300ms ease;
-}
-
-.contact {
-  border: 1px solid var(--line);
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 20px;
-  transition:
-    background 300ms ease,
-    border-color 300ms ease;
 }
 
 .contact-links {

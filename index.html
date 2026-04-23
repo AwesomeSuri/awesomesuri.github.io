@@ -112,16 +112,17 @@
 
         <div class="section-wrap" id="projects">
           <section data-aos="fade-up">
-            <h2>Featured Projects</h2>
-            <p class="section-lead">
-              These are some of the projects I've worked on:
-            </p>
-            <div class="swiper projects-swiper">
-              <div class="swiper-wrapper" id="projectsWrapper"></div>
-              <div class="projects-swiper-controls">
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
+            <div class="projects-band">
+              <p class="section-lead">
+                These are some of the projects I've worked on:
+              </p>
+              <div class="swiper projects-swiper">
+                <div class="swiper-wrapper" id="projectsWrapper"></div>
+                <div class="projects-swiper-controls">
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-pagination"></div>
+                  <div class="swiper-button-next"></div>
+                </div>
               </div>
             </div>
           </section>
@@ -224,8 +225,40 @@
       // Populate projects from JSON, then initialize the projects carousel.
       const projectsWrapper = document.getElementById("projectsWrapper");
 
+      const escAttr = (value) =>
+        String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;")
+          .replace(/</g, "&lt;");
+
+      const resolveProjectImageSrc = (src) => {
+        const fallback = "https://placehold.co/800x450/1f2937/ffffff?text=Project";
+        const s = String(src ?? "").trim();
+        if (!s) return fallback;
+        if (/^https?:\/\//i.test(s)) return s;
+        if (s.startsWith("/")) return s;
+        if (!s.includes("/")) return `/assets/${s}`;
+        return `/${s.replace(/^\//, "")}`;
+      };
+
+      const projectPanelHintGraphic = `
+                <span class="card-project__hint" aria-hidden="true">
+                  <span class="card-project__hint-bob">
+                    <svg class="card-project__hint-icon" viewBox="0 0 32 32" width="28" height="28" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+                      <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 13l8 7 8-7M8 7l8 7 8-7"/>
+                    </svg>
+                  </span>
+                </span>
+                <span class="sr-only">Expand project details by clicking the panel</span>`;
+
       const renderProjectCard = (project) => {
-        const imageSrc = project.image || "https://placehold.co/800x450/1f2937/ffffff?text=Project";
+        const imageSrc = resolveProjectImageSrc(project.image);
+        const imageSmallSrc = resolveProjectImageSrc(
+          project["image-small"] ?? project.imageSmall ?? project.image_small ?? project.image
+        );
+        const thumbCss = `url(${JSON.stringify(imageSrc)})`;
+        const thumbSmallCss = `url(${JSON.stringify(imageSmallSrc)})`;
         const companyText = project.company ? `<p class="project-company">${project.company}</p>` : "";
         const roles = Array.isArray(project.roles) ? project.roles : [];
         const tags = Array.isArray(project.tags) ? project.tags : [];
@@ -244,26 +277,49 @@
           `
           : "";
         return `
-          <article class="swiper-slide card">
-            <img class="project-thumb" src="${imageSrc}" alt="${project.name} thumbnail" loading="lazy" />
-            <h3>${project.name}</h3>
-            ${companyText}
-            <div class="project-meta">
-              ${rolesHtml}
-              ${tagsHtml}
+          <article class="swiper-slide card card--project" style='--project-thumb-large: ${thumbCss}; --project-thumb-small: ${thumbSmallCss}'>
+            <div class="card-project__inner" role="region" aria-label="${escAttr(project.name)} summary" aria-expanded="false">
+              <div class="card-project__head">
+                <h3>${project.name}</h3>
+                ${projectPanelHintGraphic}
+              </div>
+              <div class="card-project__drawer">
+                <div class="card-project__drawer-inner">
+                  <div class="card-project__body">
+                    ${companyText}
+                    <div class="project-meta">
+                      ${rolesHtml}
+                      ${tagsHtml}
+                    </div>
+                    <div class="project-description">${project.description}</div>
+                    <a class="project-link" href="${project.url}" target="_blank" rel="noopener noreferrer">Learn More -></a>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="project-description">${project.description}</div>
-            <a class="project-link" href="${project.url}" target="_blank" rel="noopener noreferrer">Learn More -></a>
           </article>
         `;
       };
 
       const renderFallbackProjects = () => {
+        const fallbackSrc = "https://placehold.co/800x450/1f2937/ffffff?text=Project";
+        const thumbCss = `url(${JSON.stringify(fallbackSrc)})`;
+        const thumbSmallCss = thumbCss;
         projectsWrapper.innerHTML = `
-          <article class="swiper-slide card">
-            <img class="project-thumb" src="https://placehold.co/800x450/1f2937/ffffff?text=Project" alt="Project thumbnail" loading="lazy" />
-            <h3>Project Coming Soon</h3>
-            <p>Project data could not be loaded right now.</p>
+          <article class="swiper-slide card card--project" style='--project-thumb-large: ${thumbCss}; --project-thumb-small: ${thumbSmallCss}'>
+            <div class="card-project__inner" role="region" aria-label="Project placeholder" aria-expanded="false">
+              <div class="card-project__head">
+                <h3>Project Coming Soon</h3>
+                ${projectPanelHintGraphic}
+              </div>
+              <div class="card-project__drawer">
+                <div class="card-project__drawer-inner">
+                  <div class="card-project__body">
+                    <p>Project data could not be loaded right now.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </article>
         `;
       };
@@ -284,15 +340,21 @@
           renderFallbackProjects();
         }
 
-        new Swiper(".projects-swiper", {
-          spaceBetween: 16,
+        const projectsCarouselEl = document.querySelector(".projects-swiper");
+        const projectsSwiper = new Swiper(".projects-swiper", {
+          effect: "fade",
+          fadeEffect: {
+            crossFade: true
+          },
+          speed: 520,
           slidesPerView: 1,
+          spaceBetween: 0,
           loop: true,
           grabCursor: true,
           autoplay: {
             delay: 5000,
             disableOnInteraction: false,
-            pauseOnMouseEnter: true
+            pauseOnMouseEnter: false
           },
           pagination: {
             el: ".swiper-pagination",
@@ -301,13 +363,43 @@
           navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev"
-          },
-          breakpoints: {
-            760: {
-              slidesPerView: 2
-            }
           }
         });
+
+        let areProjectDetailsExpanded = false;
+
+        const setAllProjectPanelsExpanded = (expanded) => {
+          areProjectDetailsExpanded = expanded;
+          projectsCarouselEl?.querySelectorAll(".card-project__inner").forEach((inner) => {
+            inner.classList.toggle("is-pinned", expanded);
+            inner.setAttribute("aria-expanded", String(expanded));
+          });
+        };
+
+        const updateProjectsAutoplay = () => {
+          if (areProjectDetailsExpanded) {
+            projectsSwiper.autoplay?.stop();
+          } else {
+            projectsSwiper.autoplay?.start();
+          }
+        };
+
+        projectsCarouselEl?.addEventListener("click", (event) => {
+          const inner = event.target.closest(".card-project__inner");
+          if (!inner || !projectsCarouselEl.contains(inner)) return;
+          if (event.target.closest("a.project-link")) return;
+
+          setAllProjectPanelsExpanded(!areProjectDetailsExpanded);
+          updateProjectsAutoplay();
+        });
+
+        // Ensure cloned loop slides match the global expanded/collapsed state.
+        projectsSwiper.on("slidesUpdated", () => {
+          setAllProjectPanelsExpanded(areProjectDetailsExpanded);
+        });
+
+        setAllProjectPanelsExpanded(false);
+        updateProjectsAutoplay();
       };
 
       initProjectsCarousel();
