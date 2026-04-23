@@ -16,9 +16,29 @@
       h1 {
         margin-bottom: 1em;
       }
+      .breadcrumb {
+        margin-bottom: 14px;
+        font-size: 0.95rem;
+      }
+      .breadcrumb a {
+        color: #2563eb;
+        text-decoration: none;
+      }
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+      .breadcrumb-sep {
+        margin: 0 6px;
+        color: #6b7280;
+      }
     </style>
   </head>
   <body>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <span aria-current="page">Impressum</span>
+    </nav>
     <h1>Impressum</h1>
 
     <p><strong>Angaben gemäß § 5 TMG</strong></p>

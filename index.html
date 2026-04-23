@@ -95,17 +95,15 @@
         <div class="section-wrap">
           <section class="hero" data-aos="fade-up">
             <span class="badge">Software Engineer - Games - Tools</span>
-            <h1>(WIP) Building fast, interactive software with clean architecture.</h1>
+            <h1>Building thoughtful software experiences across products, games, and tools.</h1>
             <p>
-              I design and ship projects focused on performance, good UX, and
-              maintainable systems. This page is my home base for projects,
-              experiments, and professional work.
+              I'm Akbar Suriaganda. I bring software engineering, product thinking,
+              and execution discipline together to create experiences people enjoy,
+              trust, and return to.
             </p>
             <div class="cta">
-              <a class="btn btn-primary" href="https://github.com/yourusername"
-                >View GitHub</a
-              >
-              <a class="btn btn-secondary" href="#projects">See Projects</a>
+              <a class="btn btn-primary" href="#contact">Get In Touch</a>
+              <a class="btn btn-secondary" href="#projects">Find Out More</a>
             </div>
           </section>
         </div>
@@ -650,7 +648,7 @@
       // Detect the section currently in view and sync nav highlight/underline.
       const refreshActiveSection = () => {
         const activationLine = topbar.offsetHeight + 56;
-        let active = sectionLinks[0]?.link ?? null;
+        let active = null;
 
         sectionLinks.forEach(({ link, section }) => {
           const sectionTop = section.getBoundingClientRect().top;

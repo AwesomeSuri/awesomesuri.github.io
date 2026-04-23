@@ -1019,6 +1019,15 @@ footer a:hover {
   body.is-nav-open {
     overflow: hidden;
   }
+
+  .projects-swiper {
+    margin-left: calc(0px - var(--container-padding));
+    width: 100vw;
+  }
+
+  .projects-swiper .card.card--project {
+    border-radius: 0;
+  }
 }
 
 @media (max-width: 359px) {
