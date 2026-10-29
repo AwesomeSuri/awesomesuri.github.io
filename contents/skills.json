@@ -3,7 +3,7 @@
         {
             "name": "Frontend",
             "description": "I implement designs with precision, strong accessibility standards, and a consistent focus on performance.",
-            "tags": ["React/ReactNative", "JS/TS", "HTML/CSS", "Webflow", "Wordpress", "Figma", "Unity"]
+            "tags": ["React/ReactNative", "JS/TS", "HTML/CSS", "Webflow", "WordPress", "Figma", "Unity"]
         },
         {
             "name": "Backend",
@@ -33,7 +33,7 @@
         {
             "name": "Asset Creation",
             "description": "I create 2D illustrations and 3D models that are optimized and suited for the target application, including game-ready workflows.",
-            "tags": ["Photoshop", "Blender", "Gimp", "Inkscape"]
+            "tags": ["Photoshop", "Blender", "GIMP", "Inkscape"]
         }
     ]
 }

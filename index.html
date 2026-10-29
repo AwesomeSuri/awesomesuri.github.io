@@ -8,34 +8,61 @@
       name="description"
       content="Portfolio website of Akbar Suriaganda, software engineer focused on games, tools, and interactive products."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
+    <link rel="canonical" href="https://awesomesuri.github.io/" />
+    <meta name="theme-color" content="#0a0c14" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f8fc" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://awesomesuri.github.io/" />
+    <meta property="og:title" content="Akbar Suriaganda | Software Engineer" />
+    <meta
+      property="og:description"
+      content="Portfolio website of Akbar Suriaganda, software engineer focused on games, tools, and interactive products."
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
+    <meta property="og:image" content="https://awesomesuri.github.io/assets/mizu.webp" />
+    <meta property="og:image:width" content="1408" />
+    <meta property="og:image:height" content="736" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Apply the saved or system theme before first paint to avoid a dark flash.
+      (() => {
+        let theme = null;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch (error) {}
+        if (!theme && window.matchMedia("(prefers-color-scheme: light)").matches) {
+          theme = "light";
+        }
+        if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+      })();
+    </script>
+    <noscript>
+      <style>
+        [data-aos] {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+    <link rel="stylesheet" href="/vendor/inter/inter.css" />
+    <link rel="stylesheet" href="/vendor/fontawesome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="/vendor/fontawesome/css/solid.min.css" />
+    <link rel="stylesheet" href="/vendor/fontawesome/css/brands.min.css" />
+    <link rel="stylesheet" href="/vendor/aos/aos.css" />
+    <link rel="stylesheet" href="/vendor/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <div class="container" id="home" >
+    <div class="container" id="home">
       <header class="topbar" data-aos="fade-down">
         <a class="brand" href="#home">
           <img
             class="brand-avatar"
-            src="/assets/akbar-cx_small.jpg"
+            src="/assets/akbar-avatar.webp"
             alt="Akbar Suriaganda profile photo"
+            width="34"
+            height="34"
           />
           <span>Akbar Suriaganda</span>
         </a>
@@ -44,7 +71,7 @@
             <a class="brand brand--menu-only" href="#home">
               <img
                 class="brand-avatar"
-                src="/assets/akbar-cx_small.jpg"
+                src="/assets/akbar-avatar.webp"
                 alt=""
                 width="34"
                 height="34"
@@ -57,7 +84,10 @@
             <a href="#contact">Contact</a>
             <div class="nav-menu-footer" id="navMenuFooter" aria-label="Copyright and legal">
               <span>© <span id="year-menu"></span> Akbar Suriaganda</span>
-              <a href="/imprint.html">Impressum</a>
+              <span class="footer-links">
+                <a href="/imprint.html">Impressum</a>
+                <a href="/privacy.html">Datenschutz</a>
+              </span>
             </div>
           </div>
         </nav>
@@ -109,11 +139,15 @@
         </div>
 
         <div class="section-wrap" id="projects">
-          <section data-aos="fade-up">
+          <section data-aos="fade-up" aria-labelledby="projectsHeading">
             <div class="projects-band">
+              <h2 id="projectsHeading">Projects</h2>
               <p class="section-lead">
                 These are some of the projects I've worked on:
               </p>
+              <noscript>
+                <p>Enable JavaScript to browse the project carousel.</p>
+              </noscript>
               <div class="swiper projects-swiper">
                 <div class="swiper-wrapper" id="projectsWrapper"></div>
                 <div class="projects-swiper-controls">
@@ -129,7 +163,7 @@
         <div class="section-wrap" id="what-i-do">
           <section data-aos="fade-up">
             <h2>What I do</h2>
-            <div class="skills-accordion" id="skillsAccordion"></div>
+            <div class="skills-grid" id="skillsGrid"></div>
           </section>
         </div>
 
@@ -138,7 +172,7 @@
             <article class="about-feature">
               <div class="about-feature-inner">
                 <div class="about-feature-copy">
-                  <h3>Hi, I'm Akbar!</h3>
+                  <h2>Hi, I'm Akbar!</h2>
                   <p>
                     I have finished my master's degree in <strong>IT: Game Engineering</strong>
                     at the <strong>Technical University of Munich</strong> and I build software
@@ -151,13 +185,14 @@
                     products that amaze people</strong> the same way those works amazed
                     me.
                   </p>
-                  <h4>Things I value:</h4>
+                  <h3>Things I value:</h3>
                   <div class="about-grid" id="valuesGrid"></div>
                 </div>
                 <img
                   class="about-feature-image"
                   src="/assets/akbar-cx.webp"
                   alt="Portrait of Akbar Suriaganda"
+                  loading="lazy"
                 />
               </div>
             </article>
@@ -200,120 +235,152 @@
       <footer>
         <div class="footer-content">
           <span>© <span id="year"></span> Akbar Suriaganda</span>
-          <a href="/imprint.html">Impressum</a>
+          <span class="footer-links">
+            <a href="/imprint.html">Impressum</a>
+            <a href="/privacy.html">Datenschutz</a>
+          </span>
         </div>
         <div class="footer-background"></div>
       </footer>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/vendor/aos/aos.js"></script>
+    <script src="/vendor/swiper/swiper-bundle.min.js"></script>
     <script>
       // Keep default browser behavior on reload/back-forward.
       if ("scrollRestoration" in history) {
         history.scrollRestoration = "auto";
       }
 
-      // Initialize scroll-in animations for section content.
-      AOS.init({
-        duration: 700,
-        once: true
-      });
+      const root = document.documentElement;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      // Full-bleed bands use the layout width, which excludes the scrollbar (100vw does not).
+      const syncPageWidth = () => {
+        root.style.setProperty("--page-width", `${root.clientWidth}px`);
+      };
+      // Contact plus footer fill at least one viewport; the footer height drives the contact min-height.
+      const footerEl = document.querySelector("footer");
+      const syncFooterHeight = () => {
+        if (footerEl) root.style.setProperty("--footer-height", `${footerEl.offsetHeight}px`);
+      };
+      syncPageWidth();
+      syncFooterHeight();
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(syncPageWidth).observe(root);
+        if (footerEl) new ResizeObserver(syncFooterHeight).observe(footerEl);
+      } else {
+        window.addEventListener("resize", () => {
+          syncPageWidth();
+          syncFooterHeight();
+        });
+      }
+
+      // Initialize scroll-in animations; show content directly if the library is unavailable.
+      if (window.AOS) {
+        AOS.init({
+          duration: 700,
+          easing: "ease-out-cubic",
+          once: true
+        });
+      } else {
+        document.querySelectorAll("[data-aos]").forEach((el) => el.removeAttribute("data-aos"));
+      }
+
+      const escapeHtml = (value) =>
+        String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+
+      const safeUrl = (value) => {
+        const s = String(value ?? "").trim();
+        return /^(https?:|mailto:|\/|#)/i.test(s) ? s : "#";
+      };
+
+      const renderChipList = (items, listClass, chipClass) =>
+        items.length
+          ? `
+              <div class="${listClass}">
+                ${items.map((item) => `<span class="${chipClass}">${escapeHtml(item)}</span>`).join("")}
+              </div>
+          `
+          : "";
+
+      // Descriptions in the JSON files are trusted HTML; every other field is escaped.
+      const loadContent = async (path, key) => {
+        const response = await fetch(path);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${path}`);
+        }
+        const data = await response.json();
+        const items = Array.isArray(data[key]) ? data[key] : [];
+        if (!items.length) {
+          throw new Error(`No ${key} found in ${path}`);
+        }
+        return items;
+      };
 
       // Populate projects from JSON, then initialize the projects carousel.
       const projectsWrapper = document.getElementById("projectsWrapper");
-
-      const escAttr = (value) =>
-        String(value ?? "")
-          .replace(/&/g, "&amp;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#39;")
-          .replace(/</g, "&lt;");
+      const projectsCarouselEl = document.querySelector(".projects-swiper");
 
       const resolveProjectImageSrc = (src) => {
-        const fallback = "https://placehold.co/800x450/1f2937/ffffff?text=Project";
         const s = String(src ?? "").trim();
-        if (!s) return fallback;
+        if (!s) return null;
         if (/^https?:\/\//i.test(s)) return s;
         if (s.startsWith("/")) return s;
         if (!s.includes("/")) return `/assets/${s}`;
-        return `/${s.replace(/^\//, "")}`;
+        return `/${s}`;
       };
 
-      const projectPanelHintGraphic = `
-                <span class="card-project__hint" aria-hidden="true">
-                  <span class="card-project__hint-bob">
-                    <svg class="card-project__hint-icon" viewBox="0 0 32 32" width="28" height="28" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
-                      <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 13l8 7 8-7M8 7l8 7 8-7"/>
-                    </svg>
-                  </span>
-                </span>
-                <span class="sr-only">Expand project details by clicking the panel</span>`;
+      const toCssUrl = (src) => (src ? `url(${JSON.stringify(src)})` : "none");
 
-      const renderProjectCard = (project) => {
+      const projectPanelHintGraphic = `
+                  <span class="card-project__hint" aria-hidden="true">
+                    <span class="card-project__hint-bob">
+                      <svg class="card-project__hint-icon" viewBox="0 0 32 32" width="28" height="28" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+                        <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 19l8-7 8 7M8 25l8-7 8 7"/>
+                      </svg>
+                    </span>
+                  </span>`;
+
+      const renderProjectCard = (project, index) => {
         const imageSrc = resolveProjectImageSrc(project.image);
         const imageSmallSrc = resolveProjectImageSrc(
           project["image-small"] ?? project.imageSmall ?? project.image_small ?? project.image
         );
-        const thumbCss = `url(${JSON.stringify(imageSrc)})`;
-        const thumbSmallCss = `url(${JSON.stringify(imageSmallSrc)})`;
-        const companyText = project.company ? `<p class="project-company">${project.company}</p>` : "";
+        const thumbStyle = `--project-thumb-large: ${toCssUrl(imageSrc)}; --project-thumb-small: ${toCssUrl(imageSmallSrc)}`;
+        const detailsId = `project-details-${index}`;
+        const companyText = project.company
+          ? `<p class="project-company">${escapeHtml(project.company)}</p>`
+          : "";
         const roles = Array.isArray(project.roles) ? project.roles : [];
         const tags = Array.isArray(project.tags) ? project.tags : [];
-        const rolesHtml = roles.length
-          ? `
-              <div class="project-chip-list">
-                ${roles.map((role) => `<span class="project-chip">${role}</span>`).join("")}
-              </div>
-          `
-          : "";
-        const tagsHtml = tags.length
-          ? `
-              <div class="project-chip-list">
-                ${tags.map((tag) => `<span class="project-chip">${tag}</span>`).join("")}
-              </div>
-          `
+        const linkHtml = project.url
+          ? `<a class="project-link" href="${escapeHtml(safeUrl(project.url))}" target="_blank" rel="noopener noreferrer">Learn More -></a>`
           : "";
         return `
-          <article class="swiper-slide card card--project" style='--project-thumb-large: ${thumbCss}; --project-thumb-small: ${thumbSmallCss}'>
-            <div class="card-project__inner" role="region" aria-label="${escAttr(project.name)} summary" aria-expanded="false">
-              <div class="card-project__head">
-                <h3>${project.name}</h3>
-                ${projectPanelHintGraphic}
-              </div>
-              <div class="card-project__drawer">
+          <article class="swiper-slide card card--project" style="${escapeHtml(thumbStyle)}">
+            <div class="card-project__inner">
+              <h3 class="card-project__head">
+                <button class="card-project__toggle" type="button" aria-expanded="false" aria-controls="${detailsId}">
+                  <span class="card-project__title">${escapeHtml(project.name)}</span>
+                  ${projectPanelHintGraphic}
+                </button>
+              </h3>
+              <div class="card-project__drawer" id="${detailsId}">
                 <div class="card-project__drawer-inner">
                   <div class="card-project__body">
                     ${companyText}
                     <div class="project-meta">
-                      ${rolesHtml}
-                      ${tagsHtml}
+                      ${renderChipList(roles, "project-chip-list", "project-chip")}
+                      ${renderChipList(tags, "project-chip-list", "project-chip")}
                     </div>
-                    <div class="project-description">${project.description}</div>
-                    <a class="project-link" href="${project.url}" target="_blank" rel="noopener noreferrer">Learn More -></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-        `;
-      };
-
-      const renderFallbackProjects = () => {
-        const fallbackSrc = "https://placehold.co/800x450/1f2937/ffffff?text=Project";
-        const thumbCss = `url(${JSON.stringify(fallbackSrc)})`;
-        const thumbSmallCss = thumbCss;
-        projectsWrapper.innerHTML = `
-          <article class="swiper-slide card card--project" style='--project-thumb-large: ${thumbCss}; --project-thumb-small: ${thumbSmallCss}'>
-            <div class="card-project__inner" role="region" aria-label="Project placeholder" aria-expanded="false">
-              <div class="card-project__head">
-                <h3>Project Coming Soon</h3>
-                ${projectPanelHintGraphic}
-              </div>
-              <div class="card-project__drawer">
-                <div class="card-project__drawer-inner">
-                  <div class="card-project__body">
-                    <p>Project data could not be loaded right now.</p>
+                    <div class="project-description">${project.description ?? ""}</div>
+                    ${linkHtml}
                   </div>
                 </div>
               </div>
@@ -323,128 +390,170 @@
       };
 
       const initProjectsCarousel = async () => {
+        if (!projectsWrapper || !projectsCarouselEl) return;
         try {
-          const response = await fetch("/contents/projects.json", { cache: "no-store" });
-          if (!response.ok) {
-            throw new Error("Failed to fetch projects.json");
-          }
-          const data = await response.json();
-          const projects = Array.isArray(data.projects) ? data.projects : [];
-          if (!projects.length) {
-            throw new Error("No projects found in JSON");
-          }
+          const projects = await loadContent("/contents/projects.json", "projects");
           projectsWrapper.innerHTML = projects.map(renderProjectCard).join("");
         } catch (error) {
-          renderFallbackProjects();
+          projectsWrapper.innerHTML = renderProjectCard(
+            {
+              name: "Project Coming Soon",
+              description: "<p>Project data could not be loaded right now.</p>"
+            },
+            0
+          );
         }
 
-        const projectsCarouselEl = document.querySelector(".projects-swiper");
-        const projectsSwiper = new Swiper(".projects-swiper", {
-          effect: "fade",
-          fadeEffect: {
-            crossFade: true
-          },
-          speed: 520,
-          slidesPerView: 1,
-          spaceBetween: 0,
-          loop: true,
-          grabCursor: true,
-          autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: false
-          },
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true
-          },
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev"
-          }
-        });
+        const projectsSwiper = window.Swiper
+          ? new Swiper(projectsCarouselEl, {
+              effect: "fade",
+              fadeEffect: {
+                crossFade: true
+              },
+              speed: reducedMotion.matches ? 0 : 520,
+              slidesPerView: 1,
+              spaceBetween: 0,
+              loop: true,
+              grabCursor: true,
+              autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: false
+              },
+              pagination: {
+                el: ".swiper-pagination",
+                clickable: true
+              },
+              navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev"
+              }
+            })
+          : null;
 
         let areProjectDetailsExpanded = false;
-        let isProjectsCarouselVisible = false;
+        let isProjectsCarouselVisible = !("IntersectionObserver" in window);
+        let isProjectsCarouselHovered = false;
+        let isProjectsCarouselFocused = false;
 
         const setAllProjectPanelsExpanded = (expanded) => {
           areProjectDetailsExpanded = expanded;
-          projectsCarouselEl?.querySelectorAll(".card-project__inner").forEach((inner) => {
+          projectsCarouselEl.querySelectorAll(".card-project__inner").forEach((inner) => {
             inner.classList.toggle("is-pinned", expanded);
-            inner.setAttribute("aria-expanded", String(expanded));
+            inner
+              .querySelector(".card-project__toggle")
+              ?.setAttribute("aria-expanded", String(expanded));
           });
         };
 
+        // Autoplay pauses while details are open, off-screen, hovered, keyboard-focused, or under reduced motion.
         const updateProjectsAutoplay = () => {
-          if (areProjectDetailsExpanded || !isProjectsCarouselVisible) {
-            projectsSwiper.autoplay?.stop();
+          if (!projectsSwiper?.autoplay) return;
+          const shouldPause =
+            areProjectDetailsExpanded ||
+            !isProjectsCarouselVisible ||
+            isProjectsCarouselHovered ||
+            isProjectsCarouselFocused ||
+            reducedMotion.matches;
+          if (shouldPause) {
+            projectsSwiper.autoplay.stop();
           } else {
-            projectsSwiper.autoplay?.start();
+            projectsSwiper.autoplay.start();
           }
         };
 
-        if (projectsCarouselEl) {
-          if ("IntersectionObserver" in window) {
-            const autoplayObserver = new IntersectionObserver(
-              ([entry]) => {
-                isProjectsCarouselVisible = Boolean(entry?.isIntersecting);
-                updateProjectsAutoplay();
-              },
-              { threshold: 0.25 }
-            );
-            autoplayObserver.observe(projectsCarouselEl);
-          } else {
-            // Fallback for older browsers: keep previous autoplay behavior.
-            isProjectsCarouselVisible = true;
-          }
+        // Faded-out slides stay in the DOM; keep them out of the tab order.
+        const syncInactiveSlides = () => {
+          if (!projectsSwiper) return;
+          projectsSwiper.slides.forEach((slide, index) => {
+            slide.inert = index !== projectsSwiper.activeIndex;
+          });
+        };
+
+        if ("IntersectionObserver" in window) {
+          const autoplayObserver = new IntersectionObserver(
+            ([entry]) => {
+              isProjectsCarouselVisible = Boolean(entry?.isIntersecting);
+              updateProjectsAutoplay();
+            },
+            { threshold: 0.25 }
+          );
+          autoplayObserver.observe(projectsCarouselEl);
         }
 
-        projectsCarouselEl?.addEventListener("click", (event) => {
-          const inner = event.target.closest(".card-project__inner");
-          if (!inner || !projectsCarouselEl.contains(inner)) return;
+        projectsCarouselEl.addEventListener("mouseenter", () => {
+          isProjectsCarouselHovered = true;
+          updateProjectsAutoplay();
+        });
+        projectsCarouselEl.addEventListener("mouseleave", () => {
+          isProjectsCarouselHovered = false;
+          updateProjectsAutoplay();
+        });
+        projectsCarouselEl.addEventListener("focusin", (event) => {
+          isProjectsCarouselFocused = event.target.matches(":focus-visible");
+          updateProjectsAutoplay();
+        });
+        projectsCarouselEl.addEventListener("focusout", (event) => {
+          if (projectsCarouselEl.contains(event.relatedTarget)) return;
+          isProjectsCarouselFocused = false;
+          updateProjectsAutoplay();
+        });
+        reducedMotion.addEventListener("change", updateProjectsAutoplay);
+
+        projectsCarouselEl.addEventListener("click", (event) => {
+          if (!event.target.closest(".card-project__inner")) return;
           if (event.target.closest("a.project-link")) return;
 
           setAllProjectPanelsExpanded(!areProjectDetailsExpanded);
           updateProjectsAutoplay();
         });
 
-        // Ensure cloned loop slides match the global expanded/collapsed state.
-        projectsSwiper.on("slidesUpdated", () => {
-          setAllProjectPanelsExpanded(areProjectDetailsExpanded);
-        });
+        if (projectsSwiper) {
+          projectsSwiper.on("slidesUpdated", () => {
+            setAllProjectPanelsExpanded(areProjectDetailsExpanded);
+          });
+          projectsSwiper.on("slideChange", syncInactiveSlides);
+          projectsSwiper.on("loopFix", syncInactiveSlides);
+        }
 
         setAllProjectPanelsExpanded(false);
+        syncInactiveSlides();
         updateProjectsAutoplay();
       };
 
       initProjectsCarousel();
 
       // Theme toggle state and references.
-      const root = document.documentElement;
       const button = document.getElementById("themeToggle");
       const themeIcon = document.getElementById("themeIcon");
       const topbarActions = document.querySelector(".topbar-actions");
-      const navLinksForTheme = document.getElementById("navLinks");
-      const mobileNavForTheme = window.matchMedia("(max-width: 768px)");
-      const storedTheme = localStorage.getItem("theme");
+      const navLinksEl = document.getElementById("navLinks");
+      const navMenuFooter = document.getElementById("navMenuFooter");
+      const mobileNav = window.matchMedia("(max-width: 767px)");
       const systemPrefersLight = window.matchMedia("(prefers-color-scheme: light)");
 
+      const readStoredTheme = () => {
+        try {
+          return localStorage.getItem("theme");
+        } catch (error) {
+          return null;
+        }
+      };
+
       // Wide layout: theme at far right of the bar. Narrow: theme lives in the slide-down menu.
-      const navMenuFooter = document.getElementById("navMenuFooter");
       const placeThemeToggle = () => {
-        if (!button || !topbarActions || !navLinksForTheme) return;
-        if (mobileNavForTheme.matches) {
+        if (!button || !topbarActions || !navLinksEl) return;
+        if (mobileNav.matches) {
           if (navMenuFooter) {
             navMenuFooter.before(button);
           } else {
-            navLinksForTheme.appendChild(button);
+            navLinksEl.appendChild(button);
           }
         } else {
           topbarActions.appendChild(button);
         }
       };
       placeThemeToggle();
-      mobileNavForTheme.addEventListener("change", placeThemeToggle);
 
       // Keep the icon and accessibility label in sync with the active theme.
       const syncThemeIcon = (theme) => {
@@ -452,19 +561,11 @@
         themeIcon.classList.toggle("fa-sun", isLight);
         themeIcon.classList.toggle("fa-moon", !isLight);
         button.setAttribute("aria-checked", String(isLight));
-        button.setAttribute(
-          "aria-label",
-          isLight ? "Use dark theme" : "Use light theme"
-        );
+        button.setAttribute("aria-label", isLight ? "Use dark theme" : "Use light theme");
       };
 
       // Resolve active theme: saved preference first, otherwise system preference.
-      const getPreferredTheme = () => {
-        if (storedTheme) {
-          return storedTheme;
-        }
-        return systemPrefersLight.matches ? "light" : "dark";
-      };
+      const getPreferredTheme = () => readStoredTheme() || (systemPrefersLight.matches ? "light" : "dark");
 
       const applyTheme = (theme) => {
         if (theme === "light") {
@@ -482,109 +583,78 @@
         const current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
         const next = current === "light" ? "dark" : "light";
         applyTheme(next);
-        localStorage.setItem("theme", next);
+        try {
+          localStorage.setItem("theme", next);
+        } catch (error) {}
       });
 
       // If the user never picked a theme, keep following OS changes live.
       systemPrefersLight.addEventListener("change", () => {
-        if (!localStorage.getItem("theme")) {
+        if (!readStoredTheme()) {
           applyTheme(systemPrefersLight.matches ? "light" : "dark");
         }
       });
 
-      const skillsAccordion = document.getElementById("skillsAccordion");
+      const skillsGrid = document.getElementById("skillsGrid");
 
-      const renderSkillItem = (skill, index) => {
+      const renderSkillItem = (skill) => {
         const tags = Array.isArray(skill.tags) ? skill.tags : [];
-        const tagsHtml = tags.length
-          ? `
-              <div class="skill-chip-list">
-                ${tags.map((tag) => `<span class="skill-chip">${tag}</span>`).join("")}
-              </div>
-            `
-          : "";
-
         return `
         <article class="skill-item">
-          <h3>${skill.name}</h3>
-          <p>${skill.description}</p>
-          ${tagsHtml}
+          <h3>${escapeHtml(skill.name)}</h3>
+          <p>${skill.description ?? ""}</p>
+          ${renderChipList(tags, "skill-chip-list", "skill-chip")}
         </article>
       `;
       };
 
-      const renderFallbackSkills = () => {
-        skillsAccordion.innerHTML = `
-          <article class="skill-item">
-            <h3>Skills</h3>
-            <p>Skills could not be loaded right now.</p>
-          </article>
-        `;
-      };
-
       const initSkillsSection = async () => {
-        if (!skillsAccordion) return;
+        if (!skillsGrid) return;
         try {
-          const response = await fetch("/contents/skills.json", { cache: "no-store" });
-          if (!response.ok) {
-            throw new Error("Failed to fetch skills.json");
-          }
-          const data = await response.json();
-          const skills = Array.isArray(data.skills) ? data.skills : [];
-          if (!skills.length) {
-            throw new Error("No skills found in JSON");
-          }
-          skillsAccordion.innerHTML = skills.map(renderSkillItem).join("");
+          const skills = await loadContent("/contents/skills.json", "skills");
+          skillsGrid.innerHTML = skills.map(renderSkillItem).join("");
         } catch (error) {
-          renderFallbackSkills();
+          skillsGrid.innerHTML = `
+            <article class="skill-item">
+              <h3>Skills</h3>
+              <p>Skills could not be loaded right now.</p>
+            </article>
+          `;
         }
       };
 
-      const skillsReady = initSkillsSection();
+      initSkillsSection();
 
       const valuesGrid = document.getElementById("valuesGrid");
 
       const renderValueCard = (value) => `
         <article class="about-card">
-          <h4>${value.name}</h4>
-          <p>${value.description}</p>
+          <h4>${escapeHtml(value.name)}</h4>
+          <p>${value.description ?? ""}</p>
         </article>
       `;
-
-      const renderFallbackValues = () => {
-        valuesGrid.innerHTML = `
-          <article class="about-card">
-            <h3>Values</h3>
-            <p>Values could not be loaded right now.</p>
-          </article>
-        `;
-      };
 
       const initValuesSection = async () => {
         if (!valuesGrid) return;
         try {
-          const response = await fetch("/contents/values.json", { cache: "no-store" });
-          if (!response.ok) {
-            throw new Error("Failed to fetch values.json");
-          }
-          const data = await response.json();
-          const values = Array.isArray(data.values) ? data.values : [];
-          if (!values.length) {
-            throw new Error("No values found in JSON");
-          }
+          const values = await loadContent("/contents/values.json", "values");
           valuesGrid.innerHTML = values.map(renderValueCard).join("");
         } catch (error) {
-          renderFallbackValues();
+          valuesGrid.innerHTML = `
+            <article class="about-card">
+              <h4>Values</h4>
+              <p>Values could not be loaded right now.</p>
+            </article>
+          `;
         }
       };
 
-      const valuesReady = initValuesSection();
+      initValuesSection();
 
       // Navigation + scrollspy references.
       const topbar = document.querySelector(".topbar");
       const nav = document.querySelector(".nav");
       const navToggle = document.getElementById("navToggle");
-      const navLinksEl = document.getElementById("navLinks");
       const navLinks = Array.from(
         nav.querySelectorAll('.nav-links a[href^="#"]:not(.brand--menu-only)')
       );
@@ -601,6 +671,11 @@
           navIcon.classList.toggle("fa-xmark", open);
         }
       };
+
+      mobileNav.addEventListener("change", () => {
+        placeThemeToggle();
+        if (!mobileNav.matches) setNavOpen(false);
+      });
 
       if (navToggle && navLinksEl && topbar) {
         navToggle.addEventListener("click", (event) => {
@@ -627,6 +702,7 @@
           if (event.key === "Escape") setNavOpen(false);
         });
       }
+
       // Map nav links to existing section wrappers for active-state tracking.
       const sectionLinks = navLinks
         .map((link) => {
@@ -674,17 +750,19 @@
           }
         });
 
+        // The last section may be too short to reach the activation line.
+        const isAtPageBottom = window.innerHeight + window.scrollY >= root.scrollHeight - 2;
+        if (isAtPageBottom && sectionLinks.length) {
+          active = sectionLinks[sectionLinks.length - 1].link;
+        }
+
         setActiveNavLink(active);
         moveNavIndicator(active);
       };
 
       // Keep nav state in sync on user scroll and viewport size changes.
       window.addEventListener("scroll", refreshActiveSection, { passive: true });
-      window.addEventListener("resize", () => {
-        placeThemeToggle();
-        if (window.innerWidth >= 768) setNavOpen(false);
-        refreshActiveSection();
-      });
+      window.addEventListener("resize", refreshActiveSection);
       refreshActiveSection();
 
       // Render current year in the footer.

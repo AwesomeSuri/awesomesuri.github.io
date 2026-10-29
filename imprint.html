@@ -4,86 +4,63 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Impressum</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 40px 20px;
-        line-height: 1.6;
-      }
-      h1 {
-        margin-bottom: 1em;
-      }
-      .breadcrumb {
-        margin-bottom: 14px;
-        font-size: 0.95rem;
-      }
-      .breadcrumb a {
-        color: #2563eb;
-        text-decoration: none;
-      }
-      .breadcrumb a:hover {
-        text-decoration: underline;
-      }
-      .breadcrumb-sep {
-        margin: 0 6px;
-        color: #6b7280;
-      }
-    </style>
+    <title>Impressum | Akbar Suriaganda</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <script>
+      (() => {
+        let theme = null;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch (error) {}
+        if (!theme && window.matchMedia("(prefers-color-scheme: light)").matches) {
+          theme = "light";
+        }
+        if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+      })();
+    </script>
+    <link rel="stylesheet" href="/vendor/inter/inter.css" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/">Home</a>
-      <span class="breadcrumb-sep">/</span>
-      <span aria-current="page">Impressum</span>
-    </nav>
-    <h1>Impressum</h1>
+    <main class="legal">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="breadcrumb-sep">/</span>
+        <span aria-current="page">Impressum</span>
+      </nav>
+      <h1>Impressum</h1>
 
-    <p><strong>Angaben gemäß § 5 TMG</strong></p>
+      <p>
+        Akbar Suriaganda<br />
+        Software Engineer<br />
+        Fritz-Winter-Straße 3<br />
+        80807 München<br />
+        Deutschland
+      </p>
 
-    <p>
-      Akbar Suriaganda<br />
-      Fritz-Winter-Straße 3<br />
-      80807 München<br />
-      Deutschland
-    </p>
+      <h2>Kontakt</h2>
+      <p>
+        Telefon: <a href="tel:+491634714712">+49 163 4714712</a><br />
+        E-Mail: <a href="mailto:akbar.suriaganda@gmail.com">akbar.suriaganda@gmail.com</a>
+      </p>
 
-    <p>
-      <strong>Kontakt</strong><br />
-      E-Mail: akbar.suriaganda@gmail.com<br />
-      <!-- Optional: Telefon: +49 xxx xxxxx -->
-    </p>
+      <h2>Redaktionell verantwortlich</h2>
+      <p>
+        Akbar Suriaganda<br />
+        Fritz-Winter-Straße 3<br />
+        80807 München<br />
+        Deutschland
+      </p>
 
-    <p>
-      <strong>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</strong><br />
-      Akbar Suriaganda<br />
-      Fritz-Winter-Straße 3<br />
-      80807 München<br />
-      Deutschland
-    </p>
+      <h2>Verbraucher&shy;streit&shy;beilegung/Universal&shy;schlichtungs&shy;stelle</h2>
+      <p>
+        Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+        Verbraucherschlichtungsstelle teilzunehmen.
+      </p>
 
-    <hr />
+      <p>Quelle: <a href="https://www.e-recht24.de">e-recht24.de</a></p>
 
-    <p>
-      <strong>Haftung für Inhalte</strong><br />
-      Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die
-      Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch
-      keine Gewähr übernehmen.
-    </p>
-
-    <p>
-      <strong>Haftung für Links</strong><br />
-      Unser Angebot enthält Links zu externen Websites Dritter, auf deren
-      Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden
-      Inhalte auch keine Gewähr übernehmen.
-    </p>
-
-    <p>
-      <strong>Urheberrecht</strong><br />
-      Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen
-      Seiten unterliegen dem deutschen Urheberrecht.
-    </p>
+      <p class="legal-links"><a href="/privacy.html">Datenschutzerklärung</a></p>
+    </main>
   </body>
 </html>

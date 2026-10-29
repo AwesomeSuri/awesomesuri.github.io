@@ -14,9 +14,9 @@
   --topbar-clearance: 80px;
   --container-padding: 24px;
   --min-width: 320px;
-  --viewport-width: max(100vw, var(--min-width));
+  --viewport-width: max(var(--page-width, 100vw), var(--min-width));
 }
-  
+
 [data-theme="light"] {
   color-scheme: light;
   --bg: #f7f8fc;
@@ -343,6 +343,11 @@ h1 {
   min-height: 90svh;
 }
 
+#contact {
+  min-height: calc(100svh - var(--footer-height, 0px));
+  padding-bottom: 64px;
+}
+
 section {
   margin-top: 0;
 }
@@ -376,7 +381,6 @@ h2 {
   max-width: var(--content-max);
   margin: 0 auto;
   padding: 24px var(--container-padding);
-  grid-template-columns: 1.3fr 1fr;
   gap: 20px;
   align-items: center;
 }
@@ -417,7 +421,7 @@ h2 {
   transition:
     border-color 300ms ease,
     background 300ms ease,
-    transform 220ms ease;
+    transform 320ms cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .about-card:hover {
@@ -611,24 +615,41 @@ h2 {
   flex-direction: column;
   gap: 10px;
   cursor: pointer;
-  overflow-y: scroll;
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 [data-theme="light"] .projects-swiper .card--project .card-project__inner {
   background: rgba(255, 255, 255, 0.6);
-  max-height: 100%;
 }
 
 .projects-swiper .card--project .card-project__head {
+  margin: 0;
+}
+
+.projects-swiper .card--project .card-project__toggle {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
 
-.projects-swiper .card--project .card-project__head h3 {
-  margin: 0;
+.projects-swiper .card--project .card-project__toggle:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.projects-swiper .card--project .card-project__title {
   flex: 1;
   min-width: 0;
 }
@@ -669,7 +690,7 @@ h2 {
   }
 
   45% {
-    transform: translateY(5px);
+    transform: translateY(-5px);
   }
 }
 
@@ -724,7 +745,7 @@ h2 {
   cursor: pointer;
 }
 
-.skills-accordion {
+.skills-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
@@ -738,7 +759,7 @@ h2 {
   display: flex;
   flex-direction: column;
   transition:
-    transform 220ms ease,
+    transform 320ms cubic-bezier(0.33, 1, 0.68, 1),
     background 300ms ease,
     border-color 300ms ease;
 }
@@ -849,6 +870,13 @@ footer a:hover {
   justify-content: space-between;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px 16px;
+}
+
 .footer-background {
   position: absolute;
   width: var(--viewport-width);
@@ -861,6 +889,66 @@ footer a:hover {
   pointer-events: none;
 }
 
+/* Imprint and privacy pages. */
+.legal {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  overflow-wrap: break-word;
+}
+
+.legal h1 {
+  margin-bottom: 1em;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.legal h2 {
+  margin-top: 2em;
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+}
+
+.legal h1 + h2 {
+  margin-top: 0;
+}
+
+.legal p,
+.legal li {
+  color: var(--muted);
+}
+
+.legal strong {
+  color: var(--text);
+}
+
+.legal hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 28px 0;
+}
+
+.legal a {
+  color: var(--brand-2);
+}
+
+.legal a:hover {
+  text-decoration: underline;
+}
+
+.legal-links {
+  margin-top: 40px;
+  font-size: 0.95rem;
+}
+
+.breadcrumb {
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+}
+
+.breadcrumb-sep {
+  margin: 0 6px;
+  color: var(--muted);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -869,13 +957,26 @@ footer a:hover {
   *,
   *::before,
   *::after {
-    transition: none !important;
     animation: none !important;
+  }
+
+  /* Reduced motion keeps fades and color changes but drops movement. */
+  [data-aos],
+  .skill-item:hover,
+  .about-card:hover,
+  .contact-btn:active,
+  .nav-toggle:active,
+  .theme-toggle:hover i {
+    transform: none !important;
+  }
+
+  .projects-swiper .card--project .card-project__drawer-inner {
+    transform: none !important;
   }
 }
 
 @media (max-width: 1024px) {
-  .skills-accordion {
+  .skills-grid {
     grid-template-columns: 1fr;
   }
 
@@ -889,10 +990,6 @@ footer a:hover {
 
   .about-feature-image {
     height: 70%;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -1009,12 +1106,9 @@ footer a:hover {
   }
 
   .nav-links .theme-toggle {
+    align-self: flex-start;
+    flex-shrink: 0;
     margin: var(--container-padding);
-    width: calc(100% - 2 * var(--container-padding));
-  }
-
-  .theme-toggle[aria-checked="true"] .theme-toggle-thumb {
-    transform: translateX(24px);
   }
 
   body.is-nav-open {
