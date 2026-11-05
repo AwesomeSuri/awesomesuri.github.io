@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asset Creation | Akbar Suriaganda</title>
+    <meta
+      name="description"
+      content="3D models Akbar Suriaganda created for Eleman: the elemental spirit and its artefacts."
+    />
+    <link rel="canonical" href="https://awesomesuri.github.io/asset-creation.html" />
+    <meta name="theme-color" content="#0a0c14" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f7f8fc" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="/assets/site/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/site/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://awesomesuri.github.io/asset-creation.html" />
+    <meta property="og:title" content="Asset Creation | Akbar Suriaganda" />
+    <meta
+      property="og:description"
+      content="3D models Akbar Suriaganda created for Eleman: the elemental spirit and its artefacts."
+    />
+    <meta property="og:image" content="https://awesomesuri.github.io/assets/carousel/eleman.webp" />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Apply the saved or system theme before first paint to avoid a dark flash.
+      (() => {
+        let theme = null;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch (error) {}
+        if (!theme && window.matchMedia("(prefers-color-scheme: light)").matches) {
+          theme = "light";
+        }
+        if (theme === "light") document.documentElement.setAttribute("data-theme", "light");
+      })();
+    </script>
+    <link rel="stylesheet" href="/vendor/inter/inter.css" />
+    <link rel="stylesheet" href="/vendor/fontawesome/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="/vendor/fontawesome/css/solid.min.css" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="topbar">
+        <a class="brand" href="/">
+          <img
+            class="brand-avatar"
+            src="/assets/site/akbar-avatar.webp"
+            alt="Akbar Suriaganda profile photo"
+            width="34"
+            height="34"
+          />
+          <span>Akbar Suriaganda</span>
+        </a>
+        <div class="topbar-actions">
+          <button
+            id="themeToggle"
+            class="theme-toggle"
+            type="button"
+            role="switch"
+            aria-label="Use light theme"
+            aria-checked="false"
+            aria-live="polite"
+          >
+            <span class="theme-toggle-track" aria-hidden="true">
+              <span class="theme-toggle-thumb">
+                <i id="themeIcon" class="fa-solid fa-moon" aria-hidden="true"></i>
+              </span>
+            </span>
+            <span class="sr-only">Toggle color theme</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="asset-page">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span aria-current="page">Asset Creation</span>
+        </nav>
+        <h1>Asset Creation</h1>
+        <p class="section-lead">
+          Models I created for Eleman, a 2.5D platformer about an elemental spirit who travels the world to regain its power.
+        </p>
+
+        <div class="model-showcase">
+            <div class="model-stage">
+              <div class="model-view">
+                <model-viewer
+                  id="modelViewer"
+                  src="/assets/art/eleman/player/Eleman.glb"
+                  alt="Base Eleman, a low-poly character with a round head, black eyes, and a simple tunic"
+                  camera-controls
+                  disable-pan
+                  orientation="0deg 0deg 180deg"
+                  camera-orbit="0deg 75deg 200%"
+                  max-camera-orbit="auto auto 200%"
+                  touch-action="pan-y"
+                  environment-image="neutral"
+                  shadow-intensity="0.85"
+                  interaction-prompt="auto"
+                  animation-crossfade-duration="0.3"
+                ></model-viewer>
+                <details class="anim-panel" open hidden>
+                  <summary>
+                    <span id="animationPickerLabel">Animations</span>
+                    <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                  </summary>
+                  <div class="model-chip-list" id="animationPicker" role="group" aria-labelledby="animationPickerLabel"></div>
+                </details>
+              </div>
+              <div class="model-dock">
+                <div class="model-menus">
+                  <div class="model-chip-list" id="projectPicker" role="group" aria-label="Project"></div>
+                  <div class="model-chip-list" id="groupPicker" role="group" aria-label="Model group"></div>
+                </div>
+                <div class="model-thumbs" id="modelPicker" role="group" aria-label="Model"></div>
+              </div>
+            </div>
+            <noscript>
+              <p>Enable JavaScript to rotate the models and play their animations.</p>
+            </noscript>
+          </div>
+      </main>
+
+      <footer>
+        <div class="footer-content">
+          <span>© <span id="year"></span> Akbar Suriaganda</span>
+          <span class="footer-links">
+            <a href="/imprint.html">Impressum</a>
+            <a href="/privacy.html">Datenschutz</a>
+          </span>
+        </div>
+        <div class="footer-background"></div>
+      </footer>
+    </div>
+
+    <script type="module" src="/vendor/model-viewer/model-viewer.min.js"></script>
+    <script type="module">
+      const artModel = (group, file, name, alt) => ({
+        name,
+        src: `/assets/art/eleman/${group}/${file}.glb`,
+        thumb: `/assets/art/eleman/thumbs/${group}/${file}.webp`,
+        alt
+      });
+
+      const projects = [
+        {
+          name: "Eleman",
+          groups: [
+            {
+              name: "Player",
+              models: [
+                artModel("player", "Eleman", "Eleman", "Base Eleman, a low-poly character with a round head, black eyes, and a simple tunic"),
+                artModel("player", "Eleman_Fire", "Fire", "Fire Eleman, a low-poly character with a red body, an orange face, a white flame-shaped head, and a small flame emblem"),
+                artModel("player", "Eleman_Water", "Water", "Water Eleman, a low-poly character with a blue droplet-shaped head and blue body"),
+                artModel("player", "Eleman_Earth", "Earth", "Earth Eleman, a low-poly character with a faceted head and a rocky body"),
+                artModel("player", "Eleman_Wind", "Wind", "Wind Eleman, a low-poly character with a pale cap, a cape, and a hat")
+              ]
+            },
+            {
+              name: "Bosses",
+              models: [
+                artModel("bosses", "FireLizard", "Fire Lizard", "Fire Lizard, a boss from Eleman"),
+                artModel("bosses", "StoneGolem", "Stone Golem", "Stone Golem, a boss from Eleman"),
+                artModel("bosses", "WaterDragon", "Water Dragon", "Water Dragon, a long blue dragon boss from Eleman"),
+                artModel("bosses", "WindGaruda", "Wind Garuda", "Wind Garuda, a boss from Eleman")
+              ]
+            },
+            {
+              name: "Artefacts",
+              models: [
+                artModel("artefacts", "Flower", "Flower", "Flower artefact, a low-poly potted flower"),
+                artModel("artefacts", "Candle", "Candle", "Candle artefact, a low-poly candle"),
+                artModel("artefacts", "Propeller", "Propeller", "Propeller artefact, a low-poly propeller on a post"),
+                artModel("artefacts", "Snorkel", "Snorkel", "Snorkel artefact, a low-poly mask with an orange strap, a white lens, and a peach snorkel tube")
+              ]
+            },
+            {
+              name: "Environment",
+              models: [
+                ["Bush", "Bush"],
+                ["Bush_Snow", "Bush Snow"],
+                ["Tree", "Tree"],
+                ["Tree_Pine", "Pine"],
+                ["TreeTrunk", "Tree Trunk"],
+                ["DeadTree", "Dead Tree"],
+                ["Cactus", "Cactus"],
+                ["Cactus_Round", "Round Cactus"],
+                ["Boulder", "Boulder"],
+                ["Stone", "Stone"],
+                ["RuneStone", "Rune Stone"],
+                ["Coral", "Coral"],
+                ["CoralLong", "Long Coral"],
+                ["CoralStone", "Coral Stone"],
+                ["House_1", "House"],
+                ["House_1_Destroyed_1", "Destroyed House"],
+                ["House_1_Destroyed_2", "Destroyed House 2"],
+                ["Bridge", "Bridge"],
+                ["DrawBridge_Gate", "Drawbridge Gate"],
+                ["DrawBridge_Platform", "Drawbridge"],
+                ["Box", "Box"],
+                ["Block_Destroyable", "Block"],
+                ["Cavern", "Cavern"]
+              ].map(([file, name]) => artModel("environment", file, name, `${name}, an environment model from Eleman`))
+            }
+          ]
+        }
+      ];
+
+      const animationOrder = [
+        "Idle",
+        "Walk",
+        "Run",
+        "Jump",
+        "Double Jump",
+        "Fall",
+        "Ground Pound",
+        "Flying",
+        "Hit",
+        "Blast",
+        "Swim",
+        "Swim Idle",
+        "Splash",
+        "Whirl",
+        "Switch",
+        "Dying",
+        "Rotate"
+      ];
+
+      const viewer = document.getElementById("modelViewer");
+      const animPanel = document.querySelector(".anim-panel");
+      const projectPicker = document.getElementById("projectPicker");
+      const groupPicker = document.getElementById("groupPicker");
+      const modelPicker = document.getElementById("modelPicker");
+      const animationPicker = document.getElementById("animationPicker");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      const animationLabel = (name) =>
+        name.replace(/^_/, "").replace(/([a-z\d])([A-Z])/g, "$1 $2");
+
+      const absoluteUrl = (src) => new URL(src, window.location.href).href;
+
+      const targetHeightFraction = 0.5;
+
+      let activeProject = 0;
+      let activeGroup = 0;
+      let activeModel = 0;
+
+      const currentProject = () => projects[activeProject];
+      const currentGroup = () => currentProject().groups[activeGroup];
+      const currentModels = () => currentGroup().models;
+      let activeAnimation = null;
+      let animationChosen = false;
+      let requestId = 0;
+      let userZoomed = false;
+      let framedRadius = null;
+
+      const normalize = (v) => {
+        const length = Math.hypot(v.x, v.y, v.z) || 1;
+        return { x: v.x / length, y: v.y / length, z: v.z / length };
+      };
+
+      const cross = (a, b) => ({
+        x: a.y * b.z - a.z * b.y,
+        y: a.z * b.x - a.x * b.z,
+        z: a.x * b.y - a.y * b.x
+      });
+
+      const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z;
+
+      // Share of the viewer height covered by the model's vertical extent.
+      const modelHeightFraction = (center, height, orbit, fovRad) => {
+        const sinPhi = Math.sin(orbit.phi);
+        const camera = {
+          x: center.x + orbit.radius * sinPhi * Math.sin(orbit.theta),
+          y: center.y + orbit.radius * Math.cos(orbit.phi),
+          z: center.z + orbit.radius * sinPhi * Math.cos(orbit.theta)
+        };
+        const forward = normalize({
+          x: center.x - camera.x,
+          y: center.y - camera.y,
+          z: center.z - camera.z
+        });
+        const backward = { x: -forward.x, y: -forward.y, z: -forward.z };
+        const worldUp = Math.abs(forward.y) > 0.99 ? { x: 0, y: 0, z: 1 } : { x: 0, y: 1, z: 0 };
+        const right = normalize(cross(worldUp, backward));
+        const up = cross(backward, right);
+        const project = (yOffset) => {
+          const relative = {
+            x: center.x - camera.x,
+            y: center.y + yOffset - camera.y,
+            z: center.z - camera.z
+          };
+          const depth = -dot(relative, backward);
+          if (depth <= 0) return 0;
+          return dot(relative, up) / depth / Math.tan(fovRad / 2);
+        };
+        return Math.abs(project(height / 2) - project(-height / 2)) / 2;
+      };
+
+      const frameModel = async (token) => {
+        await viewer.updateComplete;
+        if (token !== requestId || !viewer.loaded) return;
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+          const dimensions = viewer.getDimensions();
+          const center = viewer.getBoundingBoxCenter();
+          const orbit = viewer.getCameraOrbit();
+          const fov = (viewer.getFieldOfView() * Math.PI) / 180;
+          if (!dimensions?.y || !orbit?.radius || !fov) return;
+          const fraction = modelHeightFraction(center, dimensions.y, orbit, fov);
+          if (!fraction || Math.abs(fraction - targetHeightFraction) < 0.015) break;
+          const radius = orbit.radius * (fraction / targetHeightFraction);
+          const theta = (orbit.theta * 180) / Math.PI;
+          const phi = (orbit.phi * 180) / Math.PI;
+          viewer.maxCameraOrbit = `auto auto ${radius}m`;
+          viewer.cameraOrbit = `${theta}deg ${phi}deg ${radius}m`;
+          viewer.jumpCameraToGoal();
+          await viewer.updateComplete;
+          if (token !== requestId) return;
+        }
+        framedRadius = viewer.getCameraOrbit().radius;
+      };
+
+      const setPressed = (container, label) => {
+        container.querySelectorAll(".model-chip").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.textContent === label));
+        });
+      };
+
+      const renderMenus = () => {
+        renderChips(
+          projectPicker,
+          projects.map((project, index) => ({ label: project.name, index })),
+          currentProject().name,
+          (item) => selectProject(item.index)
+        );
+        renderChips(
+          groupPicker,
+          currentProject().groups.map((group, index) => ({ label: group.name, index })),
+          currentGroup().name,
+          (item) => selectGroup(item.index)
+        );
+      };
+
+      const renderThumbs = (pressedName) => {
+        modelPicker.replaceChildren(
+          ...currentModels().map((model, index) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "model-thumb";
+            button.setAttribute("aria-pressed", String(model.name === pressedName));
+            button.setAttribute("aria-label", model.name);
+            const image = document.createElement("img");
+            image.src = model.thumb;
+            image.alt = "";
+            image.width = 168;
+            image.height = 168;
+            image.decoding = "async";
+            button.append(image);
+            button.addEventListener("click", () => selectModel(index));
+            return button;
+          })
+        );
+      };
+
+      const renderChips = (container, items, pressedLabel, onSelect) => {
+        container.replaceChildren(
+          ...items.map((item) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "model-chip";
+            button.textContent = item.label;
+            button.setAttribute("aria-pressed", String(item.label === pressedLabel));
+            button.addEventListener("click", () => onSelect(item));
+            return button;
+          })
+        );
+      };
+
+      const sortAnimations = (names) =>
+        [...names].sort((a, b) => {
+          const rank = (name) => {
+            const index = animationOrder.indexOf(animationLabel(name));
+            return index === -1 ? animationOrder.length : index;
+          };
+          return rank(a) - rank(b) || animationLabel(a).localeCompare(animationLabel(b));
+        });
+
+      const playAnimation = (name, chosen) => {
+        if (!name) return;
+        if (chosen) animationChosen = true;
+        activeAnimation = name;
+        viewer.animationName = name;
+        setPressed(animationPicker, animationLabel(name));
+        if (reducedMotion.matches && !animationChosen) {
+          viewer.pause();
+        } else {
+          viewer.play();
+        }
+      };
+
+      const showAnimations = () => {
+        const names = sortAnimations(viewer.availableAnimations || []);
+        if (!names.length) {
+          animationPicker.replaceChildren();
+          animPanel.hidden = true;
+          return;
+        }
+        animPanel.hidden = false;
+        const next =
+          (activeAnimation && names.includes(activeAnimation) && activeAnimation) ||
+          names.find((name) => animationLabel(name) === "Idle") ||
+          names[0];
+        renderChips(
+          animationPicker,
+          names.map((name) => ({ name, label: animationLabel(name) })),
+          animationLabel(next),
+          (item) => playAnimation(item.name, true)
+        );
+        playAnimation(next, false);
+      };
+
+      const selectProject = (index) => {
+        if (!projects[index] || index === activeProject) return;
+        activeProject = index;
+        activeGroup = 0;
+        activeModel = -1;
+        renderMenus();
+        selectModel(0);
+      };
+
+      const selectGroup = (index) => {
+        if (!currentProject().groups[index] || index === activeGroup) return;
+        activeGroup = index;
+        activeModel = -1;
+        renderMenus();
+        selectModel(0);
+      };
+
+      const selectModel = (index) => {
+        const model = currentModels()[index];
+        if (!model || !viewer) return;
+        if (
+          index === activeModel &&
+          modelPicker.childElementCount &&
+          viewer.src === absoluteUrl(model.src)
+        ) {
+          return;
+        }
+        activeModel = index;
+        renderMenus();
+        renderThumbs(model.name);
+        viewer.alt = model.alt;
+        const token = ++requestId;
+        userZoomed = false;
+        const reveal = () => {
+          if (token !== requestId) return;
+          showAnimations();
+          frameModel(token);
+        };
+        if (viewer.src === absoluteUrl(model.src) && viewer.loaded) {
+          reveal();
+          return;
+        }
+        animationPicker.replaceChildren();
+        animPanel.hidden = true;
+        viewer.addEventListener("load", reveal, { once: true });
+        viewer.src = model.src;
+      };
+
+      if (viewer && projectPicker && groupPicker && modelPicker && animationPicker) {
+        viewer.addEventListener("camera-change", (event) => {
+          if (event.detail?.source !== "user-interaction" || framedRadius == null) return;
+          const radius = viewer.getCameraOrbit().radius;
+          if (Math.abs(radius - framedRadius) / framedRadius > 0.02) userZoomed = true;
+        });
+        window.addEventListener("resize", () => {
+          if (!userZoomed && viewer.loaded) frameModel(requestId);
+        });
+        viewer.addEventListener("error", () => {
+          animationPicker.replaceChildren();
+          animPanel.hidden = true;
+        });
+        selectModel(0);
+      }
+    </script>
+    <script>
+      const root = document.documentElement;
+
+      const syncPageWidth = () => {
+        root.style.setProperty("--page-width", `${root.clientWidth}px`);
+      };
+      syncPageWidth();
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(syncPageWidth).observe(root);
+      } else {
+        window.addEventListener("resize", syncPageWidth);
+      }
+
+      const button = document.getElementById("themeToggle");
+      const themeIcon = document.getElementById("themeIcon");
+      const systemPrefersLight = window.matchMedia("(prefers-color-scheme: light)");
+
+      const readStoredTheme = () => {
+        try {
+          return localStorage.getItem("theme");
+        } catch (error) {
+          return null;
+        }
+      };
+
+      const syncThemeIcon = (theme) => {
+        const isLight = theme === "light";
+        themeIcon.classList.toggle("fa-sun", isLight);
+        themeIcon.classList.toggle("fa-moon", !isLight);
+        button.setAttribute("aria-checked", String(isLight));
+        button.setAttribute("aria-label", isLight ? "Use dark theme" : "Use light theme");
+      };
+
+      const getPreferredTheme = () => readStoredTheme() || (systemPrefersLight.matches ? "light" : "dark");
+
+      const applyTheme = (theme) => {
+        if (theme === "light") {
+          root.setAttribute("data-theme", "light");
+        } else {
+          root.removeAttribute("data-theme");
+        }
+        syncThemeIcon(theme);
+      };
+
+      applyTheme(getPreferredTheme());
+
+      button.addEventListener("click", () => {
+        const current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
+        const next = current === "light" ? "dark" : "light";
+        applyTheme(next);
+        try {
+          localStorage.setItem("theme", next);
+        } catch (error) {}
+      });
+
+      systemPrefersLight.addEventListener("change", () => {
+        if (!readStoredTheme()) {
+          applyTheme(systemPrefersLight.matches ? "light" : "dark");
+        }
+      });
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

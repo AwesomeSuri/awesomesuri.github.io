@@ -11,5 +11,6 @@ Portfolio page of Akbar Suriaganda
 | `vendor/fontawesome/` | `@fortawesome/fontawesome-free` (core, solid, brands) | 6.7.2 |
 | `vendor/aos/` | `aos` | 2.3.1 |
 | `vendor/swiper/` | `swiper` (bundle) | 11.2.10 |
+| `vendor/model-viewer/` | `@google/model-viewer` | 4.4.0 |
 
 To update a library, download the new version from npm (for example `npm pack swiper@11`), copy the same files over the existing ones, and bump the version in this table. Do not switch back to CDN links.

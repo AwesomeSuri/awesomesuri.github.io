@@ -781,6 +781,24 @@ h2 {
   margin-bottom: 12px;
 }
 
+.skill-link {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 14px;
+  color: var(--brand-2);
+  font-weight: 600;
+}
+
+.skill-link:hover {
+  text-decoration: underline;
+}
+
+.skill-link:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 .skill-chip-list {
   display: flex;
   flex-wrap: wrap;
@@ -947,6 +965,240 @@ footer a:hover {
 .breadcrumb-sep {
   margin: 0 6px;
   color: var(--muted);
+}
+
+.asset-page {
+  padding-top: calc(var(--topbar-clearance) + 28px);
+  padding-bottom: 48px;
+}
+
+.asset-page h1 {
+  margin-bottom: 12px;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.asset-page .section-lead {
+  max-width: 68ch;
+}
+
+.asset-page .breadcrumb a {
+  color: var(--muted);
+}
+
+.asset-page .breadcrumb a:hover,
+.asset-page .breadcrumb a:focus-visible {
+  color: var(--text);
+}
+
+.model-showcase {
+  margin-bottom: 28px;
+}
+
+.model-stage {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #2a2d33;
+}
+
+.model-view {
+  position: relative;
+}
+
+model-viewer {
+  display: block;
+  width: 100%;
+  height: min(62vh, 620px);
+  min-height: 280px;
+  background: #2a2d33;
+  outline: none;
+  --poster-color: transparent;
+  --progress-bar-color: var(--brand-2);
+  --progress-bar-height: 3px;
+}
+
+model-viewer:focus,
+model-viewer:focus-visible {
+  outline: none;
+}
+
+.anim-panel[hidden] {
+  display: none !important;
+}
+
+.anim-panel {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: max-content;
+  max-width: min(280px, calc(100% - 24px));
+  max-height: calc(100% - 24px);
+  margin: 0;
+  padding: 8px;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  background: rgba(28, 30, 36, 0.9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  color: #f5f7ff;
+}
+
+.anim-panel summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 2px 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+.anim-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.anim-panel summary::marker {
+  content: "";
+}
+
+.anim-panel summary i {
+  font-size: 0.72rem;
+}
+
+.anim-panel:not([open]) summary i {
+  transform: rotate(-90deg);
+}
+
+.anim-panel:not([open]) .model-chip-list {
+  display: none;
+}
+
+.anim-panel summary:focus-visible {
+  outline: 2px solid var(--brand-2);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.anim-panel .model-chip-list {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.anim-panel .model-chip {
+  border-color: rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f5f7ff;
+  text-align: left;
+}
+
+.anim-panel .model-chip:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.model-dock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px 12px;
+  background: #23262c;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.model-menus {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.model-dock .model-chip {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f5f7ff;
+}
+
+.model-dock .model-chip:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.model-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.model-thumb {
+  appearance: none;
+  width: 84px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: #2a2d33;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.model-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.model-thumb:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.model-thumb[aria-pressed="true"] {
+  border-color: var(--brand-2);
+}
+
+.model-thumb:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.model-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.model-chip {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.model-chip:hover {
+  background: var(--surface-strong);
+}
+
+.model-chip[aria-pressed="true"] {
+  border-color: transparent;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  color: #fff;
+}
+
+.model-chip:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
