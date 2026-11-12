@@ -259,6 +259,181 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Discolory",
+      "groups": [
+        {
+          "name": "Player",
+          "models": [
+            {
+              "name": "Wizard",
+              "model": "Wizard",
+              "description": "Wizard, a player character from Discolory"
+            },
+            {
+              "name": "Staff",
+              "model": "Staff",
+              "description": "Staff, a player model from Discolory"
+            }
+          ]
+        },
+        {
+          "name": "Objects",
+          "models": [
+            {
+              "name": "Podest",
+              "model": "Podest",
+              "description": "Podest, an object from Discolory"
+            },
+            {
+              "name": "Pipe",
+              "model": "Pipe",
+              "description": "Pipe, an object from Discolory"
+            },
+            {
+              "name": "Mirror",
+              "model": "Mirror",
+              "description": "Mirror, an object from Discolory"
+            },
+            {
+              "name": "Mirror Minigame",
+              "model": "Mirror MiniGame",
+              "description": "Mirror Minigame, an object from Discolory"
+            },
+            {
+              "name": "Door",
+              "model": "Door",
+              "description": "Door, an object from Discolory"
+            },
+            {
+              "name": "Block",
+              "model": "Block",
+              "description": "Block, an object from Discolory"
+            }
+          ]
+        },
+        {
+          "name": "Environment",
+          "models": [
+            {
+              "name": "Brick Wall",
+              "model": "Wall Brick",
+              "description": "Brick Wall, an environment model from Discolory"
+            },
+            {
+              "name": "Brick Door Wall",
+              "model": "Wall Brick Door",
+              "description": "Brick Door Wall, an environment model from Discolory"
+            },
+            {
+              "name": "Earth Wall",
+              "model": "Wall Earth",
+              "description": "Earth Wall, an environment model from Discolory"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Phoenix Tribe",
+      "groups": [
+        {
+          "name": "Player",
+          "models": [
+            {
+              "name": "Dave",
+              "model": "Dave",
+              "description": "Dave, the player from Phoenix Tribe"
+            }
+          ]
+        },
+        {
+          "name": "Weapons",
+          "models": [
+            {
+              "name": "Pistol",
+              "model": "Pistol",
+              "description": "Pistol, a weapon from Phoenix Tribe"
+            },
+            {
+              "name": "Shotgun",
+              "model": "Shotgun",
+              "description": "Shotgun, a weapon from Phoenix Tribe"
+            },
+            {
+              "name": "Assault Rifle",
+              "model": "Assault Rifle",
+              "description": "Assault Rifle, a weapon from Phoenix Tribe"
+            },
+            {
+              "name": "Rocket Launcher",
+              "model": "Rocket Launcher",
+              "description": "Rocket Launcher, a weapon from Phoenix Tribe"
+            },
+            {
+              "name": "Machete",
+              "model": "Machete",
+              "description": "Machete, a weapon from Phoenix Tribe"
+            },
+            {
+              "name": "Boomerang",
+              "model": "Boomerang",
+              "description": "Boomerang, a weapon from Phoenix Tribe"
+            }
+          ]
+        },
+        {
+          "name": "Objects",
+          "models": [
+            {
+              "name": "Box",
+              "model": "Box",
+              "description": "Box, an object from Phoenix Tribe"
+            }
+          ]
+        },
+        {
+          "name": "Environment",
+          "models": [
+            {
+              "name": "Tree",
+              "model": "Tree",
+              "description": "Tree, an environment model from Phoenix Tribe"
+            },
+            {
+              "name": "Thin Tree",
+              "model": "TreeThin",
+              "description": "Thin Tree, an environment model from Phoenix Tribe"
+            },
+            {
+              "name": "Pine",
+              "model": "TreePine",
+              "description": "Pine, an environment model from Phoenix Tribe"
+            },
+            {
+              "name": "Cactus",
+              "model": "Cactus",
+              "description": "Cactus, an environment model from Phoenix Tribe"
+            },
+            {
+              "name": "Rock",
+              "model": "Rock",
+              "description": "Rock, an environment model from Phoenix Tribe"
+            },
+            {
+              "name": "Rock Wall",
+              "model": "Rock_wall",
+              "description": "Rock Wall, an environment model from Phoenix Tribe"
+            },
+            {
+              "name": "Floating Ground",
+              "model": "Floating_Ground",
+              "description": "Floating Ground, an environment model from Phoenix Tribe"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
