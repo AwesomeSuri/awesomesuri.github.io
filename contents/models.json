@@ -1,0 +1,264 @@
+{
+  "projects": [
+    {
+      "name": "Eleman",
+      "groups": [
+        {
+          "name": "Player",
+          "models": [
+            {
+              "name": "Eleman",
+              "model": "Eleman",
+              "description": "Base Eleman, a low-poly character with a round head, black eyes, and a simple tunic"
+            },
+            {
+              "name": "Fire",
+              "model": "Eleman_Fire",
+              "description": "Fire Eleman, a low-poly character with a red body, an orange face, a white flame-shaped head, and a small flame emblem"
+            },
+            {
+              "name": "Water",
+              "model": "Eleman_Water",
+              "description": "Water Eleman, a low-poly character with a blue droplet-shaped head and blue body"
+            },
+            {
+              "name": "Earth",
+              "model": "Eleman_Earth",
+              "description": "Earth Eleman, a low-poly character with a faceted head and a rocky body"
+            },
+            {
+              "name": "Wind",
+              "model": "Eleman_Wind",
+              "description": "Wind Eleman, a low-poly character with a pale cap, a cape, and a hat"
+            }
+          ]
+        },
+        {
+          "name": "NPCs",
+          "models": [
+            {
+              "name": "Axi",
+              "model": "Axi",
+              "description": "Axi, an NPC from Eleman"
+            },
+            {
+              "name": "Broly",
+              "model": "Broly",
+              "description": "Broly, an NPC from Eleman"
+            },
+            {
+              "name": "Cero",
+              "model": "Cero",
+              "description": "Cero, an NPC from Eleman"
+            },
+            {
+              "name": "Ojib",
+              "model": "Ojib",
+              "description": "Ojib, an NPC from Eleman"
+            },
+            {
+              "name": "R",
+              "model": "R",
+              "description": "R, an NPC from Eleman"
+            }
+          ]
+        },
+        {
+          "name": "Monsters",
+          "models": [
+            {
+              "name": "Bat",
+              "model": "Bat",
+              "description": "Bat, a monster from Eleman"
+            },
+            {
+              "name": "Boar",
+              "model": "Boar",
+              "description": "Boar, a monster from Eleman"
+            },
+            {
+              "name": "Pyranha",
+              "model": "Pyranha",
+              "description": "Pyranha, a monster from Eleman"
+            }
+          ]
+        },
+        {
+          "name": "Bosses",
+          "models": [
+            {
+              "name": "Fire Lizard",
+              "model": "FireLizard",
+              "description": "Fire Lizard, a boss from Eleman"
+            },
+            {
+              "name": "Stone Golem",
+              "model": "StoneGolem",
+              "description": "Stone Golem, a boss from Eleman"
+            },
+            {
+              "name": "Water Dragon",
+              "model": "WaterDragon",
+              "description": "Water Dragon, a long blue dragon boss from Eleman"
+            },
+            {
+              "name": "Wind Garuda",
+              "model": "WindGaruda",
+              "description": "Wind Garuda, a boss from Eleman"
+            },
+            {
+              "name": "Lightning Spirit",
+              "model": "Lightning Spirit",
+              "description": "Lightning Spirit, a boss from Eleman"
+            }
+          ]
+        },
+        {
+          "name": "Artefacts",
+          "models": [
+            {
+              "name": "Flower",
+              "model": "Flower",
+              "description": "Flower artefact, a low-poly potted flower"
+            },
+            {
+              "name": "Candle",
+              "model": "Candle",
+              "description": "Candle artefact, a low-poly candle"
+            },
+            {
+              "name": "Propeller",
+              "model": "Propeller",
+              "description": "Propeller artefact, a low-poly propeller on a post"
+            },
+            {
+              "name": "Snorkel",
+              "model": "Snorkel",
+              "description": "Snorkel artefact, a low-poly mask with an orange strap, a white lens, and a peach snorkel tube"
+            }
+          ]
+        },
+        {
+          "name": "Environment",
+          "models": [
+            {
+              "name": "Bush",
+              "model": "Bush",
+              "description": "Bush, an environment model from Eleman"
+            },
+            {
+              "name": "Bush Snow",
+              "model": "Bush_Snow",
+              "description": "Bush Snow, an environment model from Eleman"
+            },
+            {
+              "name": "Tree",
+              "model": "Tree",
+              "description": "Tree, an environment model from Eleman"
+            },
+            {
+              "name": "Pine",
+              "model": "Tree_Pine",
+              "description": "Pine, an environment model from Eleman"
+            },
+            {
+              "name": "Tree Trunk",
+              "model": "TreeTrunk",
+              "description": "Tree Trunk, an environment model from Eleman"
+            },
+            {
+              "name": "Dead Tree",
+              "model": "DeadTree",
+              "description": "Dead Tree, an environment model from Eleman"
+            },
+            {
+              "name": "Cactus",
+              "model": "Cactus",
+              "description": "Cactus, an environment model from Eleman"
+            },
+            {
+              "name": "Round Cactus",
+              "model": "Cactus_Round",
+              "description": "Round Cactus, an environment model from Eleman"
+            },
+            {
+              "name": "Boulder",
+              "model": "Boulder",
+              "description": "Boulder, an environment model from Eleman"
+            },
+            {
+              "name": "Stone",
+              "model": "Stone",
+              "description": "Stone, an environment model from Eleman"
+            },
+            {
+              "name": "Rune Stone",
+              "model": "RuneStone",
+              "description": "Rune Stone, an environment model from Eleman"
+            },
+            {
+              "name": "Coral",
+              "model": "Coral",
+              "description": "Coral, an environment model from Eleman"
+            },
+            {
+              "name": "Long Coral",
+              "model": "CoralLong",
+              "description": "Long Coral, an environment model from Eleman"
+            },
+            {
+              "name": "Coral Stone",
+              "model": "CoralStone",
+              "description": "Coral Stone, an environment model from Eleman"
+            },
+            {
+              "name": "House",
+              "model": "House_1",
+              "description": "House, an environment model from Eleman"
+            },
+            {
+              "name": "Destroyed House",
+              "model": "House_1_Destroyed_1",
+              "description": "Destroyed House, an environment model from Eleman"
+            },
+            {
+              "name": "Destroyed House 2",
+              "model": "House_1_Destroyed_2",
+              "description": "Destroyed House 2, an environment model from Eleman"
+            },
+            {
+              "name": "Bridge",
+              "model": "Bridge",
+              "description": "Bridge, an environment model from Eleman"
+            },
+            {
+              "name": "Drawbridge Gate",
+              "model": "DrawBridge_Gate",
+              "description": "Drawbridge Gate, an environment model from Eleman"
+            },
+            {
+              "name": "Drawbridge",
+              "model": "DrawBridge_Platform",
+              "description": "Drawbridge, an environment model from Eleman"
+            },
+            {
+              "name": "Box",
+              "model": "Box",
+              "description": "Box, an environment model from Eleman"
+            },
+            {
+              "name": "Block",
+              "model": "Block_Destroyable",
+              "description": "Block, an environment model from Eleman"
+            },
+            {
+              "name": "Cavern",
+              "model": "Cavern",
+              "description": "Cavern, an environment model from Eleman"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

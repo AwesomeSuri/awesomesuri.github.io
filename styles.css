@@ -1005,6 +1005,48 @@ footer a:hover {
   position: relative;
 }
 
+.model-view.is-loading model-viewer,
+.model-view.is-loading .anim-panel {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.model-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: #2a2d33;
+}
+
+.model-view.is-loading .model-loading {
+  display: flex;
+}
+
+.model-spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid rgba(255, 255, 255, 0.18);
+  border-top-color: var(--brand-2);
+  border-radius: 50%;
+  animation: model-spin 0.7s linear infinite;
+}
+
+@keyframes model-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .model-spinner {
+    animation: none;
+    border-color: var(--brand-2);
+  }
+}
+
 model-viewer {
   display: block;
   width: 100%;
@@ -1160,6 +1202,9 @@ model-viewer:focus-visible {
 
 .model-thumb[aria-pressed="true"] {
   border-color: var(--brand-2);
+  cursor: default;
+  opacity: 1;
+  pointer-events: none;
 }
 
 .model-thumb:focus-visible {

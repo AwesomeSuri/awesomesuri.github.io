@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="/vendor/inter/inter.css" />
     <link rel="stylesheet" href="/vendor/fontawesome/css/fontawesome.min.css" />
     <link rel="stylesheet" href="/vendor/fontawesome/css/solid.min.css" />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/styles.css?v=3" />
   </head>
   <body>
     <div class="container">
@@ -88,13 +88,12 @@
 
         <div class="model-showcase">
             <div class="model-stage">
-              <div class="model-view">
+              <div class="model-view is-loading">
                 <model-viewer
                   id="modelViewer"
                   src="/assets/art/eleman/player/Eleman.glb"
                   alt="Base Eleman, a low-poly character with a round head, black eyes, and a simple tunic"
                   camera-controls
-                  disable-pan
                   orientation="0deg 0deg 180deg"
                   camera-orbit="0deg 75deg 200%"
                   max-camera-orbit="auto auto 200%"
@@ -104,6 +103,10 @@
                   interaction-prompt="auto"
                   animation-crossfade-duration="0.3"
                 ></model-viewer>
+                <div class="model-loading" id="modelLoading" role="status" aria-live="polite">
+                  <span class="model-spinner" aria-hidden="true"></span>
+                  <span class="sr-only">Loading model</span>
+                </div>
                 <details class="anim-panel" open hidden>
                   <summary>
                     <span id="animationPickerLabel">Animations</span>
@@ -140,76 +143,29 @@
 
     <script type="module" src="/vendor/model-viewer/model-viewer.min.js"></script>
     <script type="module">
-      const artModel = (group, file, name, alt) => ({
-        name,
-        src: `/assets/art/eleman/${group}/${file}.glb`,
-        thumb: `/assets/art/eleman/thumbs/${group}/${file}.webp`,
-        alt
-      });
+      const catalogResponse = await fetch("/contents/models.json");
+      if (!catalogResponse.ok) throw new Error("Failed to fetch /contents/models.json");
+      const catalog = await catalogResponse.json();
 
-      const projects = [
-        {
-          name: "Eleman",
-          groups: [
-            {
-              name: "Player",
-              models: [
-                artModel("player", "Eleman", "Eleman", "Base Eleman, a low-poly character with a round head, black eyes, and a simple tunic"),
-                artModel("player", "Eleman_Fire", "Fire", "Fire Eleman, a low-poly character with a red body, an orange face, a white flame-shaped head, and a small flame emblem"),
-                artModel("player", "Eleman_Water", "Water", "Water Eleman, a low-poly character with a blue droplet-shaped head and blue body"),
-                artModel("player", "Eleman_Earth", "Earth", "Earth Eleman, a low-poly character with a faceted head and a rocky body"),
-                artModel("player", "Eleman_Wind", "Wind", "Wind Eleman, a low-poly character with a pale cap, a cape, and a hat")
-              ]
-            },
-            {
-              name: "Bosses",
-              models: [
-                artModel("bosses", "FireLizard", "Fire Lizard", "Fire Lizard, a boss from Eleman"),
-                artModel("bosses", "StoneGolem", "Stone Golem", "Stone Golem, a boss from Eleman"),
-                artModel("bosses", "WaterDragon", "Water Dragon", "Water Dragon, a long blue dragon boss from Eleman"),
-                artModel("bosses", "WindGaruda", "Wind Garuda", "Wind Garuda, a boss from Eleman")
-              ]
-            },
-            {
-              name: "Artefacts",
-              models: [
-                artModel("artefacts", "Flower", "Flower", "Flower artefact, a low-poly potted flower"),
-                artModel("artefacts", "Candle", "Candle", "Candle artefact, a low-poly candle"),
-                artModel("artefacts", "Propeller", "Propeller", "Propeller artefact, a low-poly propeller on a post"),
-                artModel("artefacts", "Snorkel", "Snorkel", "Snorkel artefact, a low-poly mask with an orange strap, a white lens, and a peach snorkel tube")
-              ]
-            },
-            {
-              name: "Environment",
-              models: [
-                ["Bush", "Bush"],
-                ["Bush_Snow", "Bush Snow"],
-                ["Tree", "Tree"],
-                ["Tree_Pine", "Pine"],
-                ["TreeTrunk", "Tree Trunk"],
-                ["DeadTree", "Dead Tree"],
-                ["Cactus", "Cactus"],
-                ["Cactus_Round", "Round Cactus"],
-                ["Boulder", "Boulder"],
-                ["Stone", "Stone"],
-                ["RuneStone", "Rune Stone"],
-                ["Coral", "Coral"],
-                ["CoralLong", "Long Coral"],
-                ["CoralStone", "Coral Stone"],
-                ["House_1", "House"],
-                ["House_1_Destroyed_1", "Destroyed House"],
-                ["House_1_Destroyed_2", "Destroyed House 2"],
-                ["Bridge", "Bridge"],
-                ["DrawBridge_Gate", "Drawbridge Gate"],
-                ["DrawBridge_Platform", "Drawbridge"],
-                ["Box", "Box"],
-                ["Block_Destroyable", "Block"],
-                ["Cavern", "Cavern"]
-              ].map(([file, name]) => artModel("environment", file, name, `${name}, an environment model from Eleman`))
-            }
-          ]
-        }
-      ];
+      const modelEntry = (project, group, entry) => {
+        const root = `/assets/art/${project.name.toLowerCase()}`;
+        const folder = group.name.toLowerCase();
+        const file = encodeURIComponent(entry.model);
+        return {
+          name: entry.name,
+          src: `${root}/${folder}/${file}.glb`,
+          thumb: `${root}/thumbs/${folder}/${file}.webp`,
+          alt: entry.description
+        };
+      };
+
+      const projects = (Array.isArray(catalog.projects) ? catalog.projects : []).map((project) => ({
+        name: project.name,
+        groups: (project.groups || []).map((group) => ({
+          name: group.name,
+          models: (group.models || []).map((entry) => modelEntry(project, group, entry))
+        }))
+      }));
 
       const animationOrder = [
         "Idle",
@@ -232,6 +188,7 @@
       ];
 
       const viewer = document.getElementById("modelViewer");
+      const modelView = document.querySelector(".model-view");
       const animPanel = document.querySelector(".anim-panel");
       const projectPicker = document.getElementById("projectPicker");
       const groupPicker = document.getElementById("groupPicker");
@@ -241,6 +198,14 @@
 
       const animationLabel = (name) =>
         name.replace(/^_/, "").replace(/([a-z\d])([A-Z])/g, "$1 $2");
+
+      const isTPose = (name) => animationLabel(name).replace(/[\s_-]/g, "").toLowerCase() === "tpose";
+
+      const isIdle = (name) => animationLabel(name) === "Idle";
+
+      const isMove = (name) => animationLabel(name) === "Move";
+
+      const monstersActive = () => currentGroup()?.name === "Monsters";
 
       const absoluteUrl = (src) => new URL(src, window.location.href).href;
 
@@ -302,9 +267,101 @@
         return Math.abs(project(height / 2) - project(-height / 2)) / 2;
       };
 
+      // The viewer's saved bounds are the bind pose. Refit them to Idle once that pose is playing.
+      const refreshIdleBounds = async (token) => {
+        if (!isIdle(viewer.animationName) || viewer.paused || viewer.currentTime <= 0.05) return;
+        const scene = sceneOf(viewer);
+        const models = scene?.models;
+        if (!models?.length) return;
+        const parents = models.map((model) => ({ model, parent: model.parent }));
+        const point = scene.boundingSphere.center;
+        const box = scene.boundingBox;
+        let fitted = false;
+        try {
+          parents.forEach(({ model, parent }) => parent?.remove(model));
+          models.forEach((model) => {
+            model.updateMatrixWorld(true);
+            model.traverse((node) => {
+              if (node.isSkinnedMesh && node.skeleton) node.skeleton.update();
+            });
+          });
+          box.makeEmpty();
+          models.forEach((model) => {
+            model.traverse((node) => {
+              if (!node.isMesh) return;
+              const position = node.geometry?.attributes?.position;
+              if (!position) return;
+              for (let index = 0; index < position.count; index += 1) {
+                // Skinned positions come back in mesh-local space. The armature
+                // scale lives on matrixWorld, which is what the renderer applies.
+                node.getVertexPosition(index, point);
+                point.applyMatrix4(node.matrixWorld);
+                box.expandByPoint(point);
+              }
+            });
+          });
+          fitted = !box.isEmpty();
+        } finally {
+          parents.forEach(({ model, parent }) => {
+            if (parent && model.parent !== parent) parent.add(model);
+          });
+        }
+        if (!fitted || token !== requestId) return false;
+        box.getSize(scene.size);
+        box.getCenter(scene.boundingSphere.center);
+        scene.boundingSphere.radius = Math.hypot(scene.size.x, scene.size.y, scene.size.z) / 2;
+        const center = scene.boundingSphere.center;
+        viewer.cameraTarget = `${center.x}m ${center.y}m ${center.z}m`;
+        viewer.minCameraOrbit = "auto auto auto";
+        viewer.jumpCameraToGoal();
+        await viewer.updateComplete;
+        return true;
+      };
+
+      // How far the idle bounds reach on screen. 1 is the edge of the view.
+      const idleScreenExtent = () => {
+        const scene = sceneOf(viewer);
+        const camera = scene?.getCamera?.();
+        const box = scene?.boundingBox;
+        if (!camera || !box || box.isEmpty()) return 0;
+        camera.updateMatrixWorld(true);
+        scene.target.updateMatrixWorld(true);
+        const target = viewer.getCameraTarget();
+        const point = box.min.clone();
+        let maxAbs = 0;
+        for (const x of [box.min.x, box.max.x]) {
+          for (const y of [box.min.y, box.max.y]) {
+            for (const z of [box.min.z, box.max.z]) {
+              point.set(x - target.x, y - target.y, z - target.z).applyMatrix4(scene.target.matrixWorld);
+              point.project(camera);
+              maxAbs = Math.max(maxAbs, Math.abs(point.x), Math.abs(point.y));
+            }
+          }
+        }
+        return maxAbs;
+      };
+
       const frameModel = async (token) => {
         await viewer.updateComplete;
         if (token !== requestId || !viewer.loaded) return;
+        const idleFitted = await refreshIdleBounds(token);
+        if (token !== requestId) return;
+        if (!idleFitted) {
+          const scene = sceneOf(viewer);
+          viewer.cameraTarget = "auto auto auto";
+          viewer.jumpCameraToGoal();
+          await viewer.updateComplete;
+          if (token !== requestId) return;
+          if (scene) {
+            await scene.updateFraming();
+            if (token !== requestId) return;
+            viewer.minCameraOrbit = "auto auto auto";
+            await viewer.updateComplete;
+            if (token !== requestId) return;
+          }
+        }
+        // Drop the previous model's zoom-out limit before measuring this one.
+        viewer.maxCameraOrbit = "auto auto 1000m";
         for (let attempt = 0; attempt < 3; attempt += 1) {
           const dimensions = viewer.getDimensions();
           const center = viewer.getBoundingBoxCenter();
@@ -316,14 +373,36 @@
           const radius = orbit.radius * (fraction / targetHeightFraction);
           const theta = (orbit.theta * 180) / Math.PI;
           const phi = (orbit.phi * 180) / Math.PI;
-          viewer.maxCameraOrbit = `auto auto ${radius}m`;
           viewer.cameraOrbit = `${theta}deg ${phi}deg ${radius}m`;
           viewer.jumpCameraToGoal();
           await viewer.updateComplete;
           if (token !== requestId) return;
         }
-        framedRadius = viewer.getCameraOrbit().radius;
+        if (idleFitted) {
+          for (let attempt = 0; attempt < 5; attempt += 1) {
+            const extent = idleScreenExtent();
+            if (!Number.isFinite(extent) || extent <= 0.9) break;
+            const orbit = viewer.getCameraOrbit();
+            if (!orbit?.radius) break;
+            const radius = orbit.radius * (extent / 0.9);
+            const theta = (orbit.theta * 180) / Math.PI;
+            const phi = (orbit.phi * 180) / Math.PI;
+            viewer.cameraOrbit = `${theta}deg ${phi}deg ${radius}m`;
+            viewer.jumpCameraToGoal();
+            await viewer.updateComplete;
+            if (token !== requestId) return;
+          }
+        }
+        // The viewer's far plane is twice the zoom-out limit. That limit has to
+        // match the camera's real distance: a closer requested distance is
+        // clamped by the minimum orbit, and the old limit then cut off the back
+        // of long models.
+        const appliedRadius = viewer.getCameraOrbit().radius;
+        if (!appliedRadius) return;
+        viewer.maxCameraOrbit = `auto auto ${appliedRadius}m`;
+        framedRadius = appliedRadius;
       };
+
 
       const setPressed = (container, label) => {
         container.querySelectorAll(".model-chip").forEach((button) => {
@@ -352,8 +431,10 @@
             const button = document.createElement("button");
             button.type = "button";
             button.className = "model-thumb";
-            button.setAttribute("aria-pressed", String(model.name === pressedName));
+            const selected = model.name === pressedName;
+            button.setAttribute("aria-pressed", String(selected));
             button.setAttribute("aria-label", model.name);
+            button.disabled = selected;
             const image = document.createElement("img");
             image.src = model.thumb;
             image.alt = "";
@@ -361,7 +442,7 @@
             image.height = 168;
             image.decoding = "async";
             button.append(image);
-            button.addEventListener("click", () => selectModel(index));
+            if (!selected) button.addEventListener("click", () => selectModel(index));
             return button;
           })
         );
@@ -384,6 +465,7 @@
       const sortAnimations = (names) =>
         [...names].sort((a, b) => {
           const rank = (name) => {
+            if (monstersActive() && isMove(name)) return -1;
             const index = animationOrder.indexOf(animationLabel(name));
             return index === -1 ? animationOrder.length : index;
           };
@@ -396,25 +478,83 @@
         activeAnimation = name;
         viewer.animationName = name;
         setPressed(animationPicker, animationLabel(name));
-        if (reducedMotion.matches && !animationChosen) {
+        const autoplay = isIdle(name) || (monstersActive() && isMove(name));
+        if (reducedMotion.matches && !animationChosen && !autoplay) {
           viewer.pause();
         } else {
           viewer.play();
         }
       };
 
+      const sceneOf = (element) =>
+        element[Object.getOwnPropertySymbols(element).find((symbol) => symbol.description === "scene")];
+
+      // The viewer plants its shadow on the lowest vertex. Keep that ground on the model origin.
+      const placeGroundAtOrigin = () => {
+        const scene = sceneOf(viewer);
+        const shadow = scene?.shadow;
+        const model = scene?._models?.[0];
+        if (!shadow || !model) return;
+        shadow.position.y = model.position.y;
+        shadow.needsUpdate = true;
+      };
+
+      const keepGroundAtOrigin = () => {
+        const scene = sceneOf(viewer);
+        if (!scene || scene.updateShadow.groundAtOrigin) {
+          placeGroundAtOrigin();
+          return;
+        }
+        const updateShadow = scene.updateShadow.bind(scene);
+        const wrapped = () => {
+          updateShadow();
+          placeGroundAtOrigin();
+        };
+        wrapped.groundAtOrigin = true;
+        scene.updateShadow = wrapped;
+        placeGroundAtOrigin();
+      };
+
+      const applyPlayingPose = () => {
+        const scene = sceneOf(viewer);
+        scene?.mixers?.forEach((mixer) => {
+          if (typeof mixer.setTime === "function") mixer.setTime(Math.max(viewer.currentTime, 0.08));
+        });
+      };
+
+      const settlePose = async (token) => {
+        const fade = viewer.animationCrossfadeDuration;
+        viewer.animationCrossfadeDuration = 0;
+        showAnimations();
+        if (viewer.animationName && !viewer.paused) {
+          viewer.currentTime = 0;
+          await viewer.updateComplete;
+          const started = performance.now();
+          while (token === requestId && performance.now() - started < 800) {
+            applyPlayingPose();
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+            if (viewer.currentTime > 0.05) break;
+          }
+          applyPlayingPose();
+          await new Promise((resolve) => requestAnimationFrame(resolve));
+        } else {
+          await viewer.updateComplete;
+        }
+        if (token !== requestId) return;
+        viewer.animationCrossfadeDuration = fade;
+      };
+
       const showAnimations = () => {
-        const names = sortAnimations(viewer.availableAnimations || []);
+        const names = sortAnimations((viewer.availableAnimations || []).filter((name) => !isTPose(name)));
         if (!names.length) {
           animationPicker.replaceChildren();
           animPanel.hidden = true;
           return;
         }
         animPanel.hidden = false;
-        const next =
-          (activeAnimation && names.includes(activeAnimation) && activeAnimation) ||
-          names.find((name) => animationLabel(name) === "Idle") ||
-          names[0];
+        const next = (monstersActive() && names.find((name) => isMove(name)))
+          || names.find((name) => isIdle(name))
+          || names[0];
         renderChips(
           animationPicker,
           names.map((name) => ({ name, label: animationLabel(name) })),
@@ -443,24 +583,33 @@
 
       const selectModel = (index) => {
         const model = currentModels()[index];
-        if (!model || !viewer) return;
-        if (
-          index === activeModel &&
-          modelPicker.childElementCount &&
-          viewer.src === absoluteUrl(model.src)
-        ) {
+        if (!model || !viewer) {
+          renderThumbs("");
           return;
         }
+        if (index === activeModel && modelPicker.childElementCount) return;
         activeModel = index;
+        activeAnimation = null;
+        animationChosen = false;
         renderMenus();
         renderThumbs(model.name);
         viewer.alt = model.alt;
         const token = ++requestId;
         userZoomed = false;
-        const reveal = () => {
+        modelView.classList.add("is-loading");
+        const reveal = async () => {
           if (token !== requestId) return;
-          showAnimations();
-          frameModel(token);
+          try {
+            await settlePose(token);
+            if (token !== requestId) return;
+            await frameModel(token);
+            if (token !== requestId) return;
+            keepGroundAtOrigin();
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+          } finally {
+            if (token === requestId) modelView.classList.remove("is-loading");
+          }
         };
         if (viewer.src === absoluteUrl(model.src) && viewer.loaded) {
           reveal();
@@ -484,6 +633,7 @@
         viewer.addEventListener("error", () => {
           animationPicker.replaceChildren();
           animPanel.hidden = true;
+          modelView.classList.remove("is-loading");
         });
         selectModel(0);
       }
