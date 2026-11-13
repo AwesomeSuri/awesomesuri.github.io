@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="/vendor/inter/inter.css" />
     <link rel="stylesheet" href="/vendor/fontawesome/css/fontawesome.min.css" />
     <link rel="stylesheet" href="/vendor/fontawesome/css/solid.min.css" />
-    <link rel="stylesheet" href="/styles.css?v=3" />
+    <link rel="stylesheet" href="/styles.css?v=4" />
   </head>
   <body>
     <div class="container">
@@ -143,7 +143,7 @@
 
     <script type="module" src="/vendor/model-viewer/model-viewer.min.js"></script>
     <script type="module">
-      const catalogResponse = await fetch("/contents/models.json");
+      const catalogResponse = await fetch("/contents/models.json", { cache: "reload" });
       if (!catalogResponse.ok) throw new Error("Failed to fetch /contents/models.json");
       const catalog = await catalogResponse.json();
 
@@ -415,13 +415,15 @@
           projectPicker,
           projects.map((project, index) => ({ label: project.name, index })),
           currentProject().name,
-          (item) => selectProject(item.index)
+          (item) => selectProject(item.index),
+          true
         );
         renderChips(
           groupPicker,
           currentProject().groups.map((group, index) => ({ label: group.name, index })),
           currentGroup().name,
-          (item) => selectGroup(item.index)
+          (item) => selectGroup(item.index),
+          true
         );
       };
 
@@ -448,15 +450,20 @@
         );
       };
 
-      const renderChips = (container, items, pressedLabel, onSelect) => {
+      const renderChips = (container, items, pressedLabel, onSelect, lockPressed = false) => {
         container.replaceChildren(
           ...items.map((item) => {
             const button = document.createElement("button");
             button.type = "button";
             button.className = "model-chip";
             button.textContent = item.label;
-            button.setAttribute("aria-pressed", String(item.label === pressedLabel));
-            button.addEventListener("click", () => onSelect(item));
+            const selected = item.label === pressedLabel;
+            button.setAttribute("aria-pressed", String(selected));
+            if (lockPressed && selected) {
+              button.disabled = true;
+            } else {
+              button.addEventListener("click", () => onSelect(item));
+            }
             return button;
           })
         );

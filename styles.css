@@ -1241,6 +1241,12 @@ model-viewer:focus-visible {
   color: #fff;
 }
 
+.model-menus .model-chip[aria-pressed="true"] {
+  cursor: default;
+  opacity: 1;
+  pointer-events: none;
+}
+
 .model-chip:focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 2px;

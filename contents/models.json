@@ -434,6 +434,56 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Wumpus World",
+      "groups": [
+        {
+          "name": "Player",
+          "models": [
+            {
+              "name": "Player",
+              "model": "Player",
+              "description": "Player, the player from Wumpus World"
+            }
+          ]
+        },
+        {
+          "name": "Items",
+          "models": [
+            {
+              "name": "Arrow",
+              "model": "Arrow",
+              "description": "Arrow, an item from Wumpus World"
+            },
+            {
+              "name": "Barrier Ears",
+              "model": "BarrierEars",
+              "description": "Barrier Ears, an item from Wumpus World"
+            },
+            {
+              "name": "Bow",
+              "model": "Bow",
+              "description": "Bow, an item from Wumpus World"
+            },
+            {
+              "name": "Heart",
+              "model": "Heart",
+              "description": "Heart, an item from Wumpus World"
+            },
+            {
+              "name": "Sword",
+              "model": "Sword",
+              "description": "Sword, an item from Wumpus World"
+            },
+            {
+              "name": "Wings",
+              "model": "Wings",
+              "description": "Wings, an item from Wumpus World"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
