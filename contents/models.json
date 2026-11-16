@@ -484,6 +484,56 @@
           ]
         }
       ]
+    },
+    {
+      "name": "How Is The Water",
+      "groups": [
+        {
+          "name": "Rocks",
+          "models": [
+            {
+              "name": "Rock 1",
+              "model": "Rock 1",
+              "description": "Rock 1, a rock from How Is The Water"
+            },
+            {
+              "name": "Rock 2",
+              "model": "Rock 2",
+              "description": "Rock 2, a rock from How Is The Water"
+            },
+            {
+              "name": "Rock 3",
+              "model": "Rock 3",
+              "description": "Rock 3, a rock from How Is The Water"
+            },
+            {
+              "name": "Rock 4",
+              "model": "Rock 4",
+              "description": "Rock 4, a rock from How Is The Water"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Prague Voucher",
+      "groups": [
+        {
+          "name": "Via",
+          "models": [
+            {
+              "name": "Via Body",
+              "model": "Via Body",
+              "description": "Via Body, a model from Prague Voucher"
+            },
+            {
+              "name": "Via Face",
+              "model": "Via Face",
+              "description": "Via Face, a model from Prague Voucher"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

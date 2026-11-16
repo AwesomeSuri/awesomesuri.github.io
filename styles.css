@@ -1117,8 +1117,29 @@ model-viewer:focus-visible {
   transform: rotate(-90deg);
 }
 
-.anim-panel:not([open]) .model-chip-list {
+.anim-panel:not([open]) .model-chip-list,
+.shapes-panel:not([open]) .shape-list {
   display: none;
+}
+
+.shapes-panel {
+  left: auto;
+  right: 12px;
+}
+
+.shape-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.shapes-panel .model-chip[aria-pressed="true"],
+.shapes-panel .model-chip[aria-pressed="true"]:hover {
+  border-color: transparent;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  color: #fff;
 }
 
 .anim-panel summary:focus-visible {
