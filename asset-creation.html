@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="/vendor/inter/inter.css" />
     <link rel="stylesheet" href="/vendor/fontawesome/css/fontawesome.min.css" />
     <link rel="stylesheet" href="/vendor/fontawesome/css/solid.min.css" />
-    <link rel="stylesheet" href="/styles.css?v=6" />
+    <link rel="stylesheet" href="/styles.css?v=11" />
   </head>
   <body>
     <div class="container">
@@ -100,21 +100,33 @@
                   touch-action="pan-y"
                   environment-image="neutral"
                   shadow-intensity="0.85"
-                  interaction-prompt="auto"
+                  interaction-prompt="none"
                   animation-crossfade-duration="0.3"
                 ></model-viewer>
                 <div class="model-loading" id="modelLoading" role="status" aria-live="polite">
                   <span class="model-spinner" aria-hidden="true"></span>
                   <span class="sr-only">Loading model</span>
                 </div>
-                <details class="anim-panel" open hidden>
+                <details class="anim-panel" hidden>
                   <summary>
                     <span id="animationPickerLabel">Animations</span>
                     <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
                   </summary>
                   <div class="model-chip-list" id="animationPicker" role="group" aria-labelledby="animationPickerLabel"></div>
                 </details>
-                <details class="anim-panel shapes-panel" open hidden>
+                <div class="anim-transport" id="animTransport" hidden>
+                  <button type="button" id="animPlay" aria-label="Play" aria-pressed="false">
+                    <i class="fa-solid fa-play" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" id="animPause" aria-label="Pause" aria-pressed="false">
+                    <i class="fa-solid fa-pause" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" id="animStop" aria-label="Stop">
+                    <i class="fa-solid fa-stop" aria-hidden="true"></i>
+                  </button>
+                  <input id="animTime" type="range" min="0" max="1" step="0.01" value="0" aria-label="Animation time" />
+                </div>
+                <details class="anim-panel shapes-panel" hidden>
                   <summary>
                     <span id="shapePickerLabel">Shapes</span>
                     <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
@@ -203,6 +215,11 @@
       const modelPicker = document.getElementById("modelPicker");
       const animationPicker = document.getElementById("animationPicker");
       const shapePicker = document.getElementById("shapePicker");
+      const animTransport = document.getElementById("animTransport");
+      const animPlay = document.getElementById("animPlay");
+      const animPause = document.getElementById("animPause");
+      const animStop = document.getElementById("animStop");
+      const animTime = document.getElementById("animTime");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
       const animationLabel = (name) =>
@@ -618,6 +635,7 @@
               }
               setShape(name, turningOn);
               sceneOf(viewer)?.queueRender?.();
+              shapePanel.open = false;
             });
             buttons.set(name, button);
             return button;
@@ -630,6 +648,7 @@
         if (!names.length) {
           animationPicker.replaceChildren();
           animPanel.hidden = true;
+          hideTransport();
           return;
         }
         animPanel.hidden = false;
@@ -640,9 +659,71 @@
           animationPicker,
           names.map((name) => ({ name, label: animationLabel(name) })),
           animationLabel(next),
-          (item) => playAnimation(item.name, true)
+          (item) => {
+            playAnimation(item.name, true);
+            animPanel.open = false;
+          }
         );
         playAnimation(next, false);
+        syncTransport();
+      };
+
+      let scrubbing = false;
+      let resumeAfterScrub = false;
+
+      const clipDuration = () => {
+        const duration = Number(viewer.duration);
+        return Number.isFinite(duration) && duration > 0 ? duration : 0;
+      };
+
+      const hideTransport = () => {
+        animTransport.hidden = true;
+      };
+
+      const syncTransport = () => {
+        const names = (viewer.availableAnimations || []).filter((name) => !isTPose(name));
+        if (!names.length || !viewer.animationName) {
+          hideTransport();
+          return;
+        }
+        animTransport.hidden = false;
+        const playing = !viewer.paused;
+        animPlay.setAttribute("aria-pressed", String(playing));
+        animPause.setAttribute("aria-pressed", String(!playing));
+        const duration = clipDuration();
+        if (!duration) return;
+        animTime.max = String(duration);
+        if (!scrubbing) animTime.value = String(Math.min(Math.max(viewer.currentTime || 0, 0), duration));
+      };
+
+      const beginScrub = () => {
+        if (scrubbing) return;
+        scrubbing = true;
+        resumeAfterScrub = !viewer.paused;
+        viewer.pause();
+      };
+
+      const seekAnimation = () => {
+        const duration = clipDuration();
+        if (!duration) return;
+        viewer.currentTime = Math.min(Math.max(Number(animTime.value) || 0, 0), duration);
+        sceneOf(viewer)?.queueRender?.();
+      };
+
+      const endScrub = () => {
+        if (!scrubbing) return;
+        seekAnimation();
+        scrubbing = false;
+        if (resumeAfterScrub) viewer.play();
+        syncTransport();
+      };
+
+      const stopAnimation = () => {
+        scrubbing = false;
+        viewer.pause();
+        viewer.currentTime = 0;
+        sceneOf(viewer)?.queueRender?.();
+        syncTransport();
       };
 
       const selectProject = (index) => {
@@ -699,11 +780,12 @@
         animationPicker.replaceChildren();
         animPanel.hidden = true;
         hideShapes();
+        hideTransport();
         viewer.addEventListener("load", reveal, { once: true });
         viewer.src = model.src;
       };
 
-      if (viewer && projectPicker && groupPicker && modelPicker && animationPicker && shapePicker) {
+      if (viewer && projectPicker && groupPicker && modelPicker && animationPicker && shapePicker && animTransport) {
         viewer.addEventListener("camera-change", (event) => {
           if (event.detail?.source !== "user-interaction" || framedRadius == null) return;
           const radius = viewer.getCameraOrbit().radius;
@@ -716,8 +798,35 @@
           animationPicker.replaceChildren();
           animPanel.hidden = true;
           hideShapes();
+          hideTransport();
           modelView.classList.remove("is-loading");
         });
+        animPlay.addEventListener("click", () => {
+          if (!viewer.animationName) return;
+          scrubbing = false;
+          viewer.play();
+          syncTransport();
+        });
+        animPause.addEventListener("click", () => {
+          if (!viewer.animationName) return;
+          scrubbing = false;
+          viewer.pause();
+          syncTransport();
+        });
+        animStop.addEventListener("click", stopAnimation);
+        animTime.addEventListener("pointerdown", beginScrub);
+        animTime.addEventListener("input", () => {
+          beginScrub();
+          seekAnimation();
+        });
+        animTime.addEventListener("change", endScrub);
+        animTime.addEventListener("pointerup", endScrub);
+        animTime.addEventListener("pointercancel", endScrub);
+        const followAnimation = () => {
+          if (!scrubbing) syncTransport();
+          requestAnimationFrame(followAnimation);
+        };
+        followAnimation();
         selectModel(0);
       }
     </script>
